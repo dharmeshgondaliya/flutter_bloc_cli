@@ -5,7 +5,9 @@ A CLI tool for generating Flutter project structures and screens using BLoC arch
 Installation
 To use flutter_bloc_cli, you need to activate it globally using the following command:
 
+```
 dart pub global activate flutter_bloc_cli
+```
 
 Usage
 Initializing Project Structure
