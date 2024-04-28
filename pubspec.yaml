@@ -3,6 +3,11 @@ description: CLI tool for rapidly scaffolding Flutter projects with BLoC archite
 version: 1.0.0
 repository: https://github.com/dharmeshgondaliya/flutter_bloc_cli
 
+platforms:
+  linux:
+  macos:
+  windows:
+
 environment:
   sdk: ^3.3.0
 
