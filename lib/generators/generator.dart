@@ -34,7 +34,7 @@ mixin Generator<T> {
   String getBlocFileContent(String screenName, String content) {
     return content
         .replaceAll("<screen_name>", screenName)
-        .replaceAll("<bloc_name>", screenName.blocName)
+        .replaceAll("<cubit_name>", screenName.cubitName)
         .replaceAll("<event_name>", screenName.eventName)
         .replaceAll("<state_name>", screenName.stateName)
         .replaceAppName;
@@ -63,7 +63,7 @@ mixin Generator<T> {
   String getScreenFileContent(String screenName, String content) {
     return content
         .replaceAll("<screen_name>", screenName)
-        .replaceAll("<bloc_name>", screenName.blocName)
+        .replaceAll("<cubit_name>", screenName.cubitName)
         .replaceAll("<state_name>", screenName.stateName)
         .replaceAll("<screen_class_name>", screenName.screenClassName)
         .replaceAll("<screen_content>", screenName.screenContent)
@@ -97,7 +97,7 @@ mixin Generator<T> {
           (element) => element.contains("abstract class RouteNavigator"));
       if (index != -1) {
         String imports =
-            "import 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/view/$screenName.dart';\nimport 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/bloc/${screenName}_bloc.dart';";
+            "import 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/view/$screenName.dart';\nimport 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/cubit/${screenName}_cubit.dart';";
         lines.insert(index, "$imports\n\n");
       }
       navigatorFileContent = lines.join("\n");
@@ -115,7 +115,7 @@ mixin Generator<T> {
       }
 
       String routes =
-          "routes = {${mapStringData}Routes.$routeName: (BuildContext context) => BlocProvider(create: (context) => ${screenName.blocName}(),child: const ${screenName.camelCase}(),)};";
+          "routes = {${mapStringData}Routes.$routeName: (BuildContext context) => BlocProvider(create: (context) => ${screenName.cubitName}(),child: const ${screenName.camelCase}(),)};";
       navigatorFileContent = navigatorFileContent.replaceAll(matchData, routes);
       return DartFormatter().format(navigatorFileContent);
     }

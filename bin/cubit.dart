@@ -12,7 +12,7 @@ void main(List<String> arguments) async {
   stopwatch.start();
   try {
     CliDataProvider.instance.args = arguments;
-    CliDataProvider.instance.codePattern = CodePattern.bloc;
+    CliDataProvider.instance.codePattern = CodePattern.cubit;
     Command command = CliCommand.instance.findCommand();
     if (command.requiredValidate()) {
       await command.validations?.validate();

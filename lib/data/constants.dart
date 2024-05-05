@@ -43,10 +43,14 @@ abstract class Constants {
       "\\lib\\App\\screens\\home_screen\\repository\\home_screen_repository.dart";
   static const String homeScreenBlocPath =
       "\\lib\\App\\screens\\home_screen\\bloc\\home_screen_bloc.dart";
-  static const String homeScreenStatePath =
+  static const String homeScreenStatePathBloc =
       "\\lib\\App\\screens\\home_screen\\bloc\\home_screen_state.dart";
   static const String homeScreenEventPath =
       "\\lib\\App\\screens\\home_screen\\bloc\\home_screen_event.dart";
+  static const String homeScreenCubitPath =
+      "\\lib\\App\\screens\\home_screen\\cubit\\home_screen_cubit.dart";
+  static const String homeScreenStatePathCubit =
+      "\\lib\\App\\screens\\home_screen\\cubit\\home_screen_state.dart";
 
   // Utils
   static const String commonUtilsFilePath = "\\lib\\App\\utils\\common.dart";

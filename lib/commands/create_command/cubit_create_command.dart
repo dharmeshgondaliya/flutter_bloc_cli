@@ -7,10 +7,9 @@ import 'package:flutter_bloc_cli/generators/create_generartor.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/utils/common.dart';
-import 'package:dcli/dcli.dart';
 
-class CreateCommand extends Command with Generator {
-  CreateCommand({required super.validations});
+class CubitCreateCommand extends Command with Generator {
+  CubitCreateCommand({required super.validations});
   @override
   Future<void> execute() async {
     List<String> args = CliDataProvider.instance.args;
@@ -30,7 +29,6 @@ class CreateCommand extends Command with Generator {
             "${Constants.screensDirectoryPath}\\$screenName} already exist",
       );
     }
-    // bool addRepository = await addRepositoryOption();
     await createDirectory(
       path: "${Constants.screensDirectoryPath}\\$screenName",
     );
@@ -38,26 +36,18 @@ class CreateCommand extends Command with Generator {
     await Future.wait([
       writeFile(
         path:
-            "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_bloc.dart",
+            "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_cubit.dart",
         content: getBlocFileContent(
           screenName,
-          CreateGenerator.blocFileContent,
+          CreateGenerator.cubitFileContent,
         ),
       ),
       writeFile(
         path:
-            "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_event.dart",
-        content: getBlocEventFileContent(
-          screenName,
-          CreateGenerator.blocEventFileContent,
-        ),
-      ),
-      writeFile(
-        path:
-            "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_state.dart",
+            "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_state.dart",
         content: getBlocStateFileContent(
           screenName,
-          CreateGenerator.blocStateFileContent,
+          CreateGenerator.cubitStateFileContent,
         ),
       ),
       writeFile(
@@ -65,10 +55,9 @@ class CreateCommand extends Command with Generator {
             "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart",
         content: getScreenFileContent(
           screenName,
-          CreateGenerator.screeFileContent,
+          CreateGenerator.cubitScreeFileContent,
         ),
       ),
-      // if (addRepository) ...[
       writeFile(
         path:
             "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart",
@@ -77,7 +66,6 @@ class CreateCommand extends Command with Generator {
           CreateGenerator.repositoryFileContent,
         ),
       ),
-      // ]
     ]);
     List routingData = await Future.wait([
       readFile(path: Constants.appRoutesPath),
@@ -103,15 +91,6 @@ class CreateCommand extends Command with Generator {
       ),
     ]);
     print("\nSuccess! The $screenName screen has been created successfully.");
-  }
-
-  Future<bool> addRepositoryOption() async {
-    final option = menu(
-      "Add repository?",
-      options: ["yes", "no"],
-      defaultOption: "yes",
-    );
-    return option == "yes";
   }
 
   @override

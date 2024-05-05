@@ -5,8 +5,8 @@ import 'package:flutter_bloc_cli/generators/init_generator.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
 import 'package:process_run/shell_run.dart';
 
-class InitCommand extends Command with Generator {
-  InitCommand({required super.validations});
+class BlocInitCommand extends Command with Generator {
+  BlocInitCommand({required super.validations});
 
   @override
   Future<void> execute() async {
@@ -76,7 +76,7 @@ class InitCommand extends Command with Generator {
         content: InitGenerator.homeScreenEventFileContent.replaceAppName,
       ),
       writeFile(
-        path: Constants.homeScreenStatePath,
+        path: Constants.homeScreenStatePathBloc,
         content: InitGenerator.homeScreenStateFileContent.replaceAppName,
       ),
       writeFile(

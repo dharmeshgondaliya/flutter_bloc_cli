@@ -698,4 +698,67 @@ class ApiProvider {
     }
   }
 }""";
+
+  static String homeScreenFileContentCubit =
+      """import 'package:cubit_test/App/screens/base_screen/view/base_screen.dart';
+import 'package:cubit_test/App/screens/home_screen/cubit/home_screen_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BaseScreen(
+      body: BlocBuilder<HomeScreenCubit, HomeScreenState>(
+        builder: (context, state) {
+          return const Center(
+            child: Text("Home Screen"),
+          );
+        },
+      ),
+    );
+  }
+}""";
+
+  static const String routeNavigatorFileContentCubit =
+      """import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cubit_test/App/routes/app_routes.dart';
+import 'package:cubit_test/App/screens/home_screen/cubit/home_screen_cubit.dart';
+import 'package:cubit_test/App/screens/home_screen/view/home_screen.dart';
+import 'package:cubit_test/App/screens/splash_screen/view/splash_screen.dart';
+
+abstract class RouteNavigator {
+  static final Map<String, Widget Function(BuildContext)> routes = {
+    Routes.splash: (BuildContext context) => const SplashScreen(),
+    Routes.homeScreen: (BuildContext context) => BlocProvider(
+          create: (context) => HomeScreenCubit(),
+          child: const HomeScreen(),
+        ),
+  };
+}""";
+
+  static const String homeScreenCubitFileContent =
+      """import 'package:bloc/bloc.dart';
+part 'home_screen_state.dart';
+
+class HomeScreenCubit extends Cubit<HomeScreenState> {
+  HomeScreenCubit() : super(HomeScreenState());
+}""";
+
+  static const String homeScreenStateFileContentCubit =
+      """part of 'home_screen_cubit.dart';
+
+class HomeScreenState {
+  HomeScreenState copy() {
+    return HomeScreenState();
+  }
+}""";
 }

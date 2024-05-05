@@ -19,6 +19,7 @@ extension StringExtension on String {
   String get repositoryName => "${camelCase}Repository";
   String get screenClassName => camelCase;
   String get screenContent => split("_").join(" ");
+  String get cubitName => "${camelCase}Cubit";
   String get routeName {
     String name = camelCase;
     return name[0].toLowerCase() + name.substring(1);
