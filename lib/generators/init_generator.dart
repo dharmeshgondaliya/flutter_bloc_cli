@@ -700,8 +700,8 @@ class ApiProvider {
 }""";
 
   static String homeScreenFileContentCubit =
-      """import 'package:cubit_test/App/screens/base_screen/view/base_screen.dart';
-import 'package:cubit_test/App/screens/home_screen/cubit/home_screen_cubit.dart';
+      """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -730,10 +730,10 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String routeNavigatorFileContentCubit =
       """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cubit_test/App/routes/app_routes.dart';
-import 'package:cubit_test/App/screens/home_screen/cubit/home_screen_cubit.dart';
-import 'package:cubit_test/App/screens/home_screen/view/home_screen.dart';
-import 'package:cubit_test/App/screens/splash_screen/view/splash_screen.dart';
+import 'package:<app_name>/App/routes/app_routes.dart';
+import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
+import 'package:<app_name>/App/screens/home_screen/view/home_screen.dart';
+import 'package:<app_name>/App/screens/splash_screen/view/splash_screen.dart';
 
 abstract class RouteNavigator {
   static final Map<String, Widget Function(BuildContext)> routes = {

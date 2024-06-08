@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
+import 'package:flutter_bloc_cli/enums/enums.dart';
 import 'package:flutter_bloc_cli/exception/cli_exception.dart';
 import 'package:flutter_bloc_cli/utils/pubspec_utils.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
@@ -37,6 +39,7 @@ mixin Generator<T> {
         .replaceAll("<cubit_name>", screenName.cubitName)
         .replaceAll("<event_name>", screenName.eventName)
         .replaceAll("<state_name>", screenName.stateName)
+        .replaceAll("<bloc_name>", screenName.blocName)
         .replaceAppName;
   }
 
@@ -67,6 +70,7 @@ mixin Generator<T> {
         .replaceAll("<state_name>", screenName.stateName)
         .replaceAll("<screen_class_name>", screenName.screenClassName)
         .replaceAll("<screen_content>", screenName.screenContent)
+        .replaceAll("<bloc_name>", screenName.blocName)
         .replaceAppName;
   }
 
@@ -97,7 +101,7 @@ mixin Generator<T> {
           (element) => element.contains("abstract class RouteNavigator"));
       if (index != -1) {
         String imports =
-            "import 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/view/$screenName.dart';\nimport 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/cubit/${screenName}_cubit.dart';";
+            "import 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/view/$screenName.dart';\nimport 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/${CliDataProvider.instance.codePattern.value}/${screenName}_${CliDataProvider.instance.codePattern.value}.dart';";
         lines.insert(index, "$imports\n\n");
       }
       navigatorFileContent = lines.join("\n");
@@ -115,7 +119,7 @@ mixin Generator<T> {
       }
 
       String routes =
-          "routes = {${mapStringData}Routes.$routeName: (BuildContext context) => BlocProvider(create: (context) => ${screenName.cubitName}(),child: const ${screenName.camelCase}(),)};";
+          "routes = {${mapStringData}Routes.$routeName: (BuildContext context) => BlocProvider(create: (context) => ${CliDataProvider.instance.codePattern == CodePattern.bloc ? screenName.blocName : screenName.cubitName}(),child: const ${screenName.camelCase}(),)};";
       navigatorFileContent = navigatorFileContent.replaceAll(matchData, routes);
       return DartFormatter().format(navigatorFileContent);
     }
