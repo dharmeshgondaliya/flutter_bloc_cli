@@ -79,7 +79,7 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.commonUtilsFileContent.replaceAppName,
       ),
       writeFile(
-        path: Constants.textfieldWidgetPath,
+        path: Constants.textFieldWidgetPath,
         content: InitGenerator.textfieldWidgetFileContent.replaceAppName,
       ),
       writeFile(
