@@ -5,3 +5,7 @@
 ### 1.0.1 - Added Cubit command.
 
 - Implemented the Cubit command for initializing project structure and creating screens.
+
+### 1.0.2 - File path updated 
+
+- Updated file path separator for Mac and Linux
