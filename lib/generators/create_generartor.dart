@@ -11,13 +11,11 @@ class <bloc_name> extends Bloc<<event_name>, <state_name>> {
   }
 }""";
 
-  static const String blocEventFileContent =
-      """part of '<screen_name>_bloc.dart';
+  static const String blocEventFileContent = """part of '<screen_name>_bloc.dart';
 
 sealed class <event_name> {}""";
 
-  static const String blocStateFileContent =
-      """part of '<screen_name>_bloc.dart';
+  static const String blocStateFileContent = """part of '<screen_name>_bloc.dart';
 
 class <state_name> {
   <state_name> copy() {
@@ -27,8 +25,7 @@ class <state_name> {
 
   static const String repositoryFileContent = """class <repository_name> {}""";
 
-  static const String blocScreeFileContent =
-      """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static const String blocScreeFileContent = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/bloc/<screen_name>_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,10 +38,14 @@ class <screen_class_name> extends StatefulWidget {
 }
 
 class _<screen_class_name>State extends State<<screen_class_name>> {
+  
+  <bloc_instance>
+  
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       body: BlocBuilder<<bloc_name>, <state_name>>(
+        <bloc__instance>
         builder: (context, state) {
           return const Center(
             child: Text("<screen_content>"),
@@ -63,8 +64,7 @@ class <cubit_name> extends Cubit<<state_name>> {
   <cubit_name>() : super(<state_name>());
 }""";
 
-  static const String cubitStateFileContent =
-      """part of '<screen_name>_cubit.dart';
+  static const String cubitStateFileContent = """part of '<screen_name>_cubit.dart';
 
 class <state_name> {
   <state_name> copy() {
@@ -72,8 +72,7 @@ class <state_name> {
   }
 }""";
 
-  static const String cubitScreeFileContent =
-      """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static const String cubitScreeFileContent = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/cubit/<screen_name>_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,10 +85,14 @@ class <screen_class_name> extends StatefulWidget {
 }
 
 class _<screen_class_name>State extends State<<screen_class_name>> {
+  
+  <cubit_instance>
+  
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       body: BlocBuilder<<cubit_name>, <state_name>>(
+        <cubit__instance>
         builder: (context, state) {
           return const Center(
             child: Text("<screen_content>"),

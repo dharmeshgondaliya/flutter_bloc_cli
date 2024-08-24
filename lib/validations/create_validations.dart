@@ -9,21 +9,21 @@ import 'package:flutter_bloc_cli/validations/validation_messages.dart';
 import 'package:flutter_bloc_cli/validations/validations.dart';
 
 class CreateValidations extends Validations {
+  CreateValidations({required this.createMultiple});
+  final bool createMultiple;
+
   @override
   Future<void> validate() async {
     await super.validate();
     String path = Directory.current.path;
-    bool directoryExist =
-        await checkDirectoryExist("$path${Constants.screensDirectoryPath.actualPath()}");
+    bool directoryExist = await checkDirectoryExist("$path${Constants.screensDirectoryPath.actualPath()}");
     if (!directoryExist) {
-      throw CliException(
-        message: "${Constants.screensDirectoryPath.actualPath()} Directory not found",
-      );
+      throw CliException(message: "${Constants.screensDirectoryPath.actualPath()} Directory not found");
     }
-    if (!isValidScreenName(CliDataProvider.instance.args[2])) {
-      throw CliException(
-        message: ValidationMessages.invalidScreenNameMessageString,
-      );
+    for (String screenName in CliDataProvider.instance.args.sublist(2)) {
+      if (!isValidScreenName(screenName)) {
+        throw CliException(message: ValidationMessages.invalidScreenNameMessageString);
+      }
     }
   }
 
