@@ -96,6 +96,10 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.networkImageWidgetFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.searchFieldWidgetPath.actualPath(),
+        content: InitGenerator.searchFieldWidgetFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.textStyleFilePath.actualPath(),
         content: InitGenerator.textStyleFileContent.replaceAppName,
       ),

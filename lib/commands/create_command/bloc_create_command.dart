@@ -1,15 +1,17 @@
 import 'dart:io';
-
+import 'package:dcli/dcli.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/blank_screen.dart';
+import 'package:flutter_bloc_cli/commands/create_command/creater.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/grid_screen.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/listing_screen.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/exception/cli_exception.dart';
-import 'package:flutter_bloc_cli/generators/create_generartor.dart';
-import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 
-class BlocCreateCommand extends Command with Generator {
+class BlocCreateCommand extends Command {
   BlocCreateCommand({required super.validations, required this.createMultiple});
   final bool createMultiple;
 
@@ -29,74 +31,28 @@ class BlocCreateCommand extends Command with Generator {
       }
     }
 
-    bool routeExist = await checkDirectoryExist("${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
+    print('Choose the type of screen you want to create:');
+    print('1) Blank Screen');
+    print('2) Listing Screen');
+    print('3) Grid Screen');
+    String option = ask(
+      "\nWhich type of screen do you want to create: ",
+      defaultValue: '1',
+      validator: Ask.integer,
+    );
 
-    for (String screenName in CliDataProvider.instance.args.sublist(2)) {
-      await createDirectory(path: "${Constants.screensDirectoryPath}\\$screenName".actualPath());
-
-      await Future.wait([
-        writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_bloc.dart".actualPath(),
-          content: getBlocFileContent(
-            screenName,
-            CreateGenerator.blocFileContent,
-          ),
-        ),
-        writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_event.dart".actualPath(),
-          content: getBlocEventFileContent(
-            screenName,
-            CreateGenerator.blocEventFileContent,
-          ),
-        ),
-        writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_state.dart".actualPath(),
-          content: getBlocStateFileContent(
-            screenName,
-            CreateGenerator.blocStateFileContent,
-          ),
-        ),
-        writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart".actualPath(),
-          content: getScreenFileContent(
-            screenName,
-            CreateGenerator.blocScreeFileContent,
-            routeExist,
-          ),
-        ),
-        writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),
-          content: getRepositoryFileContent(
-            screenName,
-            CreateGenerator.repositoryFileContent,
-          ),
-        ),
-      ]);
-
-      if (routeExist) {
-        List routingData = await Future.wait([readFile(path: Constants.appRoutesPath.actualPath()), readFile(path: Constants.routeNavigatorPath.actualPath())]);
-        String routesFileData = routingData[0];
-        String routeNavigatorData = routingData[1];
-
-        await Future.wait([
-          writeFile(
-            path: Constants.appRoutesPath.actualPath(),
-            content: getRoutesFileContent(
-              screenName,
-              routesFileData,
-            ),
-          ),
-          writeFile(
-            path: Constants.routeNavigatorPath.actualPath(),
-            content: getNavigatorFileContent(
-              screenName,
-              routeNavigatorData,
-            ),
-          ),
-        ]);
-      }
-      print("\nSuccess! The $screenName screen has been created successfully.");
+    Creater createScreen;
+    switch (option) {
+      case '1':
+        createScreen = BlankScreen();
+      case '2':
+        createScreen = ListingScreen();
+      case '3':
+        createScreen = GridScreen();
+      default:
+        createScreen = BlankScreen();
     }
+    await createScreen.execute();
   }
 
   @override

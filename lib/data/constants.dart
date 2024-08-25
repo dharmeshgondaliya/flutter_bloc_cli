@@ -47,4 +47,5 @@ abstract class Constants {
   static final String checkboxWidgetPath = "/lib/App/widgets/app_checkbox.dart";
   static final String radioButtonWidgetPath = "/lib/App/widgets/app_radio_button.dart";
   static final String networkImageWidgetPath = "/lib/App/widgets/app_network_image.dart";
+  static final String searchFieldWidgetPath = "/lib/App/widgets/search_field.dart";
 }
