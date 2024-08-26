@@ -30,12 +30,22 @@ class CliDataProvider {
         ),
       },
       "create": {
-        "args_length": 3,
         "has_sub_command": true,
-        "sub_commands": ['screen'],
-        "command": CubitCreateCommand(
-          validations: CreateValidations(),
-        ),
+        "sub_commands": {
+          "screen": {
+            "args_length": 3,
+            "command": CubitCreateCommand(
+              validations: CreateValidations(createMultiple: false),
+              createMultiple: false,
+            ),
+          },
+          "screens": {
+            "command": CubitCreateCommand(
+              validations: CreateValidations(createMultiple: true),
+              createMultiple: false,
+            ),
+          },
+        },
       }
     },
     "bloc": {
@@ -52,14 +62,24 @@ class CliDataProvider {
         ),
       },
       "create": {
-        "args_length": 3,
         "has_sub_command": true,
-        "sub_commands": ['screen'],
-        "command": BlocCreateCommand(
-          validations: CreateValidations(),
-        ),
+        "sub_commands": {
+          "screen": {
+            "args_length": 3,
+            "command": BlocCreateCommand(
+              validations: CreateValidations(createMultiple: false),
+              createMultiple: false,
+            ),
+          },
+          "screens": {
+            "command": BlocCreateCommand(
+              validations: CreateValidations(createMultiple: true),
+              createMultiple: true,
+            ),
+          }
+        }
       }
-    },
+    }
   };
 
   set args(List<String> args) {
