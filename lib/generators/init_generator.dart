@@ -1,14 +1,12 @@
 class InitGenerator {
-  static const String mainFileContent =
-      """import 'package:flutter/material.dart';
+  static const String mainFileContent = """import 'package:flutter/material.dart';
 import 'package:<app_name>/app.dart';
 
 void main() {
   runApp(const MyApp());
 }""";
 
-  static const String appFileContent =
-      """import 'package:flutter/material.dart';
+  static const String appFileContent = """import 'package:flutter/material.dart';
 import 'package:<app_name>/App/routes/app_routes.dart';
 import 'package:<app_name>/App/routes/route_navigator.dart';      
 
@@ -37,8 +35,7 @@ class _MyAppState extends State<MyApp> {
   static const String homeScreen = "/homeScreen";
 }""";
 
-  static const String routeNavigatorFileContent =
-      """import 'package:flutter/material.dart';
+  static const String routeNavigatorFileContent = """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/routes/app_routes.dart';
 import 'package:<app_name>/App/screens/home_screen/bloc/home_screen_bloc.dart';
@@ -55,8 +52,7 @@ abstract class RouteNavigator {
   };
 }""";
 
-  static const colorConstantsFileContent =
-      """import 'package:flutter/material.dart';
+  static const colorConstantsFileContent = """import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primaryColor = Colors.green;
@@ -69,8 +65,7 @@ class AppColors {
   // static const String logo = "\$_assetpath/logo.png";
 }""";
 
-  static const baseScreenFileContent =
-      """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const baseScreenFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -103,8 +98,7 @@ class BaseScreen extends StatelessWidget {
   }
 }""";
 
-  static const String splashScreenFileContent =
-      """import 'package:<app_name>/App/routes/app_routes.dart';
+  static const String splashScreenFileContent = """import 'package:<app_name>/App/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -134,8 +128,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }""";
 
-  static const String homeScreenFileContent =
-      """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static const String homeScreenFileContent = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/home_screen/bloc/home_screen_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -162,10 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }""";
 
-  static const String homeScreenRepositoryFileContent =
-      "class HomeScreenRepository {}";
-  static const String homeScreenBlocFileContent =
-      """import 'package:bloc/bloc.dart';
+  static const String homeScreenRepositoryFileContent = "class HomeScreenRepository {}";
+  static const String homeScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
 part 'home_screen_event.dart';
 
@@ -177,8 +168,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   }
 }""";
 
-  static const String homeScreenStateFileContent =
-      """part of 'home_screen_bloc.dart';
+  static const String homeScreenStateFileContent = """part of 'home_screen_bloc.dart';
 
 class HomeScreenState {
   HomeScreenState copy() {
@@ -186,15 +176,13 @@ class HomeScreenState {
   }
 }""";
 
-  static const String homeScreenEventFileContent =
-      """part of 'home_screen_bloc.dart';
+  static const String homeScreenEventFileContent = """part of 'home_screen_bloc.dart';
 
 sealed class HomeScreenEvent {
   const HomeScreenEvent();
 }""";
 
-  static const String baseDialogFileContent =
-      """import 'package:flutter/material.dart';
+  static const String baseDialogFileContent = """import 'package:flutter/material.dart';
 
 class BaseDialog extends StatelessWidget {
   const BaseDialog({
@@ -232,8 +220,7 @@ class BaseDialog extends StatelessWidget {
   }
 }""";
 
-  static const String customAppbarFileContent =
-      """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String customAppbarFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -256,15 +243,94 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }""";
 
-  static const String commonUtilsFileContent =
-      """import 'package:flutter/material.dart';
+  static const String searchFieldWidgetFileContent = """import 'dart:async';
+import 'package:flutter/material.dart';
+
+class SearchField extends StatefulWidget {
+  const SearchField({super.key, required this.searchController, this.onTextChange});
+  final TextEditingController searchController;
+  final Function(String text)? onTextChange;
+
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  double height = 40;
+  bool showClearIcon = false;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    showClearIcon = widget.searchController.text.trim().isNotEmpty;
+    super.initState();
+  }
+
+  void onTextChange(String text) {
+    if (text.isEmpty && showClearIcon) {
+      showClearIcon = false;
+      setState(() {});
+    } else if (text.isNotEmpty && !showClearIcon) {
+      showClearIcon = true;
+      setState(() {});
+    }
+    _timer?.cancel();
+    _timer = Timer(const Duration(milliseconds: 300), () => widget.onTextChange?.call(text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      width: double.maxFinite,
+      child: TextField(
+        controller: widget.searchController,
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey.shade300,
+          suffixIconConstraints: BoxConstraints(maxWidth: height, minWidth: height, maxHeight: height, minHeight: height),
+          constraints: BoxConstraints(minWidth: double.maxFinite, maxWidth: double.maxFinite, maxHeight: height, minHeight: height),
+          contentPadding: const EdgeInsets.only(left: 10, right: 10),
+          hintText: "Search...",
+          suffixIcon: showClearIcon
+              ? InkWell(
+                  onTap: () {
+                    widget.searchController.clear();
+                    onTextChange("");
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: Center(
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      child: const Icon(Icons.close_outlined, size: 15),
+                    ),
+                  ),
+                )
+              : null,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+          disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        ),
+        onChanged: (value) {
+          onTextChange(value.trim());
+        },
+      ),
+    );
+  }
+}""";
+
+  static const String commonUtilsFileContent = """import 'package:flutter/material.dart';
 
 void removeFocus() {
   FocusManager.instance.primaryFocus?.unfocus();
 }""";
 
-  static const String checkboxWidgetFileContent =
-      """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppCheckbox extends StatelessWidget {
@@ -286,8 +352,7 @@ class AppCheckbox extends StatelessWidget {
   }
 }""";
 
-  static const String networkImageWidgetFileContent =
-      """import 'package:flutter/material.dart';
+  static const String networkImageWidgetFileContent = """import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class AppNetworkImage extends StatelessWidget {
@@ -338,8 +403,7 @@ class AppNetworkImage extends StatelessWidget {
   }
 }""";
 
-  static const String radioButtonWidgetFileContent =
-      """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String radioButtonWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppRadioButton<T> extends StatelessWidget {
@@ -367,8 +431,7 @@ class AppRadioButton<T> extends StatelessWidget {
   }
 }""";
 
-  static const String textfieldWidgetFileContent =
-      """import 'package:flutter/material.dart';
+  static const String textfieldWidgetFileContent = """import 'package:flutter/material.dart';
 import 'package:<app_name>/App/data/constants/color_constants.dart';
 import 'package:<app_name>/App/utils/common.dart';
 import 'package:flutter/services.dart';
@@ -503,8 +566,7 @@ class AppTextField extends StatelessWidget {
   }
 }""";
 
-  static const String textStyleFileContent =
-      """import 'package:flutter/material.dart';
+  static const String textStyleFileContent = """import 'package:flutter/material.dart';
 
 class AppTextStyle {
   static const String? _fontFamily = null;
@@ -578,8 +640,7 @@ class AppTextStyle {
   String get token => _token;
 }""";
 
-  static const String preferenceProviderFileContent =
-      """import 'package:shared_preferences/shared_preferences.dart';
+  static const String preferenceProviderFileContent = """import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceProvider {
   static final PreferenceProvider _appPreference =
@@ -699,8 +760,7 @@ class ApiProvider {
   }
 }""";
 
-  static String homeScreenFileContentCubit =
-      """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static String homeScreenFileContentCubit = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -727,8 +787,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }""";
 
-  static const String routeNavigatorFileContentCubit =
-      """import 'package:flutter/material.dart';
+  static const String routeNavigatorFileContentCubit = """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/routes/app_routes.dart';
 import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
@@ -745,16 +804,14 @@ abstract class RouteNavigator {
   };
 }""";
 
-  static const String homeScreenCubitFileContent =
-      """import 'package:bloc/bloc.dart';
+  static const String homeScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 part 'home_screen_state.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
   HomeScreenCubit() : super(HomeScreenState());
 }""";
 
-  static const String homeScreenStateFileContentCubit =
-      """part of 'home_screen_cubit.dart';
+  static const String homeScreenStateFileContentCubit = """part of 'home_screen_cubit.dart';
 
 class HomeScreenState {
   HomeScreenState copy() {
