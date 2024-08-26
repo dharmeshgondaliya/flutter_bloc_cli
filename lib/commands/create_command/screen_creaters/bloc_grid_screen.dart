@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_bloc_cli/commands/create_command/creater.dart';
+import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/create_generartor.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 
-class GridScreen extends Creater with Generator {
+class BlocGridScreen extends CreateCommand with Generator {
   @override
   Future<void> execute() async {
     bool routeExist = await checkDirectoryExist("${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
@@ -42,7 +42,7 @@ class GridScreen extends Creater with Generator {
           path: "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart".actualPath(),
           content: getScreenFileContent(
             screenName,
-            CreateGenerator.gridScreenFileContent,
+            CreateGenerator.blocGridScreenFileContent,
             routeExist,
           ),
         ),

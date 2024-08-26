@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:dcli/dcli.dart';
-import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/blank_screen.dart';
-import 'package:flutter_bloc_cli/commands/create_command/creater.dart';
-import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/grid_screen.dart';
-import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/listing_screen.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/bloc_blank_screen.dart';
+import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/bloc_grid_screen.dart';
+import 'package:flutter_bloc_cli/commands/create_command/screen_creaters/bloc_listing_screen.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/exception/cli_exception.dart';
@@ -41,16 +41,16 @@ class BlocCreateCommand extends Command {
       validator: Ask.integer,
     );
 
-    Creater createScreen;
+    CreateCommand createScreen;
     switch (option) {
       case '1':
-        createScreen = BlankScreen();
+        createScreen = BlocBlankScreen();
       case '2':
-        createScreen = ListingScreen();
+        createScreen = BlocListingScreen();
       case '3':
-        createScreen = GridScreen();
+        createScreen = BlocGridScreen();
       default:
-        createScreen = BlankScreen();
+        createScreen = BlocBlankScreen();
     }
     await createScreen.execute();
   }

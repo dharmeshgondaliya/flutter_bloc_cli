@@ -1,14 +1,14 @@
 import 'dart:io';
 
+import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/create_generartor.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
-import '../creater.dart';
 
-class BlankScreen extends Creater with Generator {
+class BlocListingScreen extends CreateCommand with Generator {
   @override
   Future<void> execute() async {
     bool routeExist = await checkDirectoryExist("${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
@@ -42,9 +42,13 @@ class BlankScreen extends Creater with Generator {
           path: "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart".actualPath(),
           content: getScreenFileContent(
             screenName,
-            CreateGenerator.blocScreeFileContent,
+            CreateGenerator.blocListingScreenFileContent,
             routeExist,
           ),
+        ),
+        writeFile(
+          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart".actualPath(),
+          content: CreateGenerator.listItemViewFileContent,
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),

@@ -56,7 +56,7 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
   }
 }""";
 
-  static const String gridScreenFileContent = """import 'package:flutter/material.dart';
+  static const String blocGridScreenFileContent = """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/bloc/<screen_name>_bloc.dart';
@@ -113,7 +113,7 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
   }
 }""";
 
-  static const String listingScreenFileContent = """import 'package:flutter/material.dart';
+  static const String blocListingScreenFileContent = """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/bloc/<screen_name>_bloc.dart';
@@ -207,6 +207,115 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
             child: Text("<screen_content>"),
           );
         },
+      ),
+    );
+  }
+}""";
+
+  static const String cubitGridScreenFileContent = """import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+import 'package:<app_name>/App/screens/<screen_name>/cubit/<screen_name>_cubit.dart';
+import 'package:<app_name>/App/widgets/search_field.dart';
+import 'grid_list_item_view.dart';
+
+class <screen_class_name> extends StatefulWidget {
+  const <screen_class_name>({super.key});
+
+  @override
+  State<<screen_class_name>> createState() => _<screen_class_name>State();
+}
+
+class _<screen_class_name>State extends State<<screen_class_name>> {
+  final TextEditingController searchController = TextEditingController();
+  
+  <cubit_instance>
+  
+  @override
+  Widget build(BuildContext context) {
+    return BaseScreen(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            SearchField(
+              searchController: searchController,
+              onTextChange: (text) {},
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: BlocBuilder<<cubit_name>, <state_name>>(
+                <cubit__instance>
+                builder: (context, state) {
+                  return GridView.builder(
+                    itemCount: 20,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                    ),
+                    itemBuilder: (context, index) => GridListItem(onTap: () {}),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}""";
+
+  static const String cubitListingScreenFileContent = """import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+import 'package:<app_name>/App/screens/<screen_name>/cubit/<screen_name>_cubit.dart';
+import 'package:<app_name>/App/widgets/search_field.dart';
+import 'list_item_view.dart';
+
+class <screen_class_name> extends StatefulWidget {
+  const <screen_class_name>({super.key});
+
+  @override
+  State<<screen_class_name>> createState() => _<screen_class_name>State();
+}
+
+class _<screen_class_name>State extends State<<screen_class_name>> {
+  final TextEditingController searchController = TextEditingController();
+  
+  <cubit_instance>
+  
+  @override
+  Widget build(BuildContext context) {
+    return BaseScreen(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            SearchField(
+              searchController: searchController,
+              onTextChange: (text) {},
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: BlocBuilder<<cubit_name>, <state_name>>(
+                <cubit__instance>
+                builder: (context, state) {
+                  return ListView.separated(
+                    itemCount: 25,
+                    itemBuilder: (context, index) => ListItemView(onTap: () {}),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
