@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
@@ -18,6 +20,7 @@ class BlocInitCommand extends Command with Generator {
       createDirectory(path: Constants.utilsDirectoryPath.actualPath()),
       createDirectory(path: Constants.constantsDirectoryPath.actualPath()),
       createDirectory(path: Constants.providerDirectoryPath.actualPath()),
+      createDirectory(path: Constants.assetsImageDirectoryPath.actualPath()),
     ]);
     await Future.wait([
       writeFile(
@@ -117,12 +120,29 @@ class BlocInitCommand extends Command with Generator {
         content: InitGenerator.preferenceProviderFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.enumsPath.actualPath(),
+        content: InitGenerator.enumsFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.apiProviderPath.actualPath(),
         content: InitGenerator.apiProviderFileContent.replaceAppName,
       ),
     ]);
+
+    String emptyImageFilePath = Constants.assetsEmptyImageFilePath.actualPath();
+    String destinationFilePath = "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
+
+    File emptyImageFile = File("D:/Dharmesh/test/flutter_bloc_cli/assets/images/empty.png");
+    if (emptyImageFile.existsSync()) {
+      File destinationFile = File(destinationFilePath);
+      await destinationFile.create(recursive: true);
+      await emptyImageFile.copy(destinationFile.path);
+    } else {
+      print("Empty file not exist: ${emptyImageFile.path}");
+    }
+
     await run(
-      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http",
+      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer",
       verbose: false,
     );
   }

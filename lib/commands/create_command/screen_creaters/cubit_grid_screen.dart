@@ -21,14 +21,14 @@ class CubitGridScreen extends CreateCommand with Generator {
           path: "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_cubit.dart".actualPath(),
           content: getBlocFileContent(
             screenName,
-            CreateGenerator.cubitFileContent,
+            CreateGenerator.cubitGridFileContent,
           ),
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_state.dart".actualPath(),
           content: getBlocStateFileContent(
             screenName,
-            CreateGenerator.cubitStateFileContent,
+            CreateGenerator.cubitStateGridFileContent,
           ),
         ),
         writeFile(
@@ -42,6 +42,10 @@ class CubitGridScreen extends CreateCommand with Generator {
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\view\\grid_list_item_view.dart".actualPath(),
           content: CreateGenerator.gridItemViewFileContent,
+        ),
+        writeFile(
+          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart".actualPath(),
+          content: CreateGenerator.gridLoadingViewFileContent,
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),

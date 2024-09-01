@@ -24,6 +24,9 @@ abstract class Constants {
   static final String preferenceProviderPath = "/lib/App/data/provider/preference_provider.dart";
   static final String apiProviderPath = "/lib/App/data/provider/api_provider.dart";
 
+  // Enums
+  static final String enumsPath = "/lib/App/data/enums/enums.dart";
+
   // Screens
   static final String baseScreenPath = "/lib/App/screens/base_screen/view/base_screen.dart";
   static final String baseDialogPath = "/lib/App/screens/base_screen/view/base_dialog.dart";
@@ -48,4 +51,8 @@ abstract class Constants {
   static final String radioButtonWidgetPath = "/lib/App/widgets/app_radio_button.dart";
   static final String networkImageWidgetPath = "/lib/App/widgets/app_network_image.dart";
   static final String searchFieldWidgetPath = "/lib/App/widgets/search_field.dart";
+
+  // Assets
+  static final String assetsImageDirectoryPath = "/assets/images";
+  static final String assetsEmptyImageFilePath = "/assets/images/empty.png";
 }

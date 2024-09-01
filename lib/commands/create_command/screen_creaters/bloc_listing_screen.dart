@@ -21,21 +21,21 @@ class BlocListingScreen extends CreateCommand with Generator {
           path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_bloc.dart".actualPath(),
           content: getBlocFileContent(
             screenName,
-            CreateGenerator.blocFileContent,
+            CreateGenerator.blocListFileContent,
           ),
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_event.dart".actualPath(),
           content: getBlocEventFileContent(
             screenName,
-            CreateGenerator.blocEventFileContent,
+            CreateGenerator.blocEventListFileContent,
           ),
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_state.dart".actualPath(),
           content: getBlocStateFileContent(
             screenName,
-            CreateGenerator.blocStateFileContent,
+            CreateGenerator.blocStateListFileContent,
           ),
         ),
         writeFile(
@@ -49,6 +49,10 @@ class BlocListingScreen extends CreateCommand with Generator {
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart".actualPath(),
           content: CreateGenerator.listItemViewFileContent,
+        ),
+        writeFile(
+          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart".actualPath(),
+          content: CreateGenerator.listLoadingViewFileContent,
         ),
         writeFile(
           path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),

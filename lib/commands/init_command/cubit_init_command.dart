@@ -4,6 +4,7 @@ import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/generators/init_generator.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
+import 'package:process_run/shell_run.dart';
 
 class CubitInitCommand extends Command with Generator {
   CubitInitCommand({required super.validations});
@@ -17,6 +18,7 @@ class CubitInitCommand extends Command with Generator {
       createDirectory(path: Constants.utilsDirectoryPath.actualPath()),
       createDirectory(path: Constants.constantsDirectoryPath.actualPath()),
       createDirectory(path: Constants.providerDirectoryPath.actualPath()),
+      createDirectory(path: Constants.assetsImageDirectoryPath.actualPath()),
     ]);
     await Future.wait([
       writeFile(
@@ -112,14 +114,18 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.preferenceProviderFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.enumsPath.actualPath(),
+        content: InitGenerator.enumsFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.apiProviderPath.actualPath(),
         content: InitGenerator.apiProviderFileContent.replaceAppName,
       ),
     ]);
-    // await run(
-    //   "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http",
-    //   verbose: false,
-    // );
+    await run(
+      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer",
+      verbose: false,
+    );
   }
 
   @override

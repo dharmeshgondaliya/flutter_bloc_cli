@@ -158,6 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String homeScreenRepositoryFileContent = "class HomeScreenRepository {}";
   static const String homeScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
+import 'package:<app_name>/App/data/enums/enums.dart';  
+
 part 'home_screen_event.dart';
 
 part 'home_screen_state.dart';
@@ -171,6 +173,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   static const String homeScreenStateFileContent = """part of 'home_screen_bloc.dart';
 
 class HomeScreenState {
+  HomeScreenState({this.currentState = ActivityState.initial});
+
+  ActivityState currentState;
+
   HomeScreenState copy() {
     return HomeScreenState();
   }
@@ -293,6 +299,7 @@ class _SearchFieldState extends State<SearchField> {
           constraints: BoxConstraints(minWidth: double.maxFinite, maxWidth: double.maxFinite, maxHeight: height, minHeight: height),
           contentPadding: const EdgeInsets.only(left: 10, right: 10),
           hintText: "Search...",
+          prefixIcon: const Icon(Icons.search_outlined),
           suffixIcon: showClearIcon
               ? InkWell(
                   onTap: () {
@@ -319,6 +326,35 @@ class _SearchFieldState extends State<SearchField> {
         onChanged: (value) {
           onTextChange(value.trim());
         },
+      ),
+    );
+  }
+}""";
+
+  static const String emptyWidgetFileContent = """import 'package:flutter/material.dart';
+import '../utils/asset_images.dart';
+
+class EmptyView extends StatelessWidget {
+  const EmptyView({super.key, this.assetImage, this.titleText});
+
+  final String? assetImage;
+  final String? titleText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            assetImage ?? AssetImages.empty,
+            width: 150,
+            height: 150,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 20),
+          Text(titleText ?? "No Data Found")
+        ],
       ),
     );
   }
@@ -640,6 +676,8 @@ class AppTextStyle {
   String get token => _token;
 }""";
 
+  static const String enumsFileContent = """enum ActivityState { initial, loading, loaded, empty, error }""";
+
   static const String preferenceProviderFileContent = """import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceProvider {
@@ -805,6 +843,9 @@ abstract class RouteNavigator {
 }""";
 
   static const String homeScreenCubitFileContent = """import 'package:bloc/bloc.dart';
+
+import 'package:<app_name>/App/data/enums/enums.dart';
+
 part 'home_screen_state.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
@@ -814,8 +855,12 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   static const String homeScreenStateFileContentCubit = """part of 'home_screen_cubit.dart';
 
 class HomeScreenState {
+  HomeScreenState({this.currentState = ActivityState.initial});
+
+  ActivityState currentState;
+
   HomeScreenState copy() {
-    return HomeScreenState();
+    return HomeScreenState(currentState: currentState);
   }
 }""";
 }
