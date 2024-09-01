@@ -108,6 +108,10 @@ class BlocInitCommand extends Command with Generator {
         content: InitGenerator.searchFieldWidgetFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.emptyViewWidgetPath.actualPath(),
+        content: InitGenerator.emptyWidgetFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.textStyleFilePath.actualPath(),
         content: InitGenerator.textStyleFileContent.replaceAppName,
       ),
@@ -129,16 +133,18 @@ class BlocInitCommand extends Command with Generator {
       ),
     ]);
 
-    String emptyImageFilePath = Constants.assetsEmptyImageFilePath.actualPath();
-    String destinationFilePath = "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
+    String filePath = Platform.script.toFilePath();
+    if (filePath.contains("flutter_bloc_cli")) {
+      String directoryPath = filePath.substring(0, filePath.indexOf("${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}"));
+      String emptyImageFilePath = "$directoryPath${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}assets${Platform.pathSeparator}images${Platform.pathSeparator}empty.png";
+      String destinationFilePath = "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
 
-    File emptyImageFile = File("D:/Dharmesh/test/flutter_bloc_cli/assets/images/empty.png");
-    if (emptyImageFile.existsSync()) {
-      File destinationFile = File(destinationFilePath);
-      await destinationFile.create(recursive: true);
-      await emptyImageFile.copy(destinationFile.path);
-    } else {
-      print("Empty file not exist: ${emptyImageFile.path}");
+      File emptyImageFile = File(emptyImageFilePath);
+      if (emptyImageFile.existsSync()) {
+        File destinationFile = File(destinationFilePath);
+        await destinationFile.create(recursive: true);
+        await emptyImageFile.copy(destinationFile.path);
+      }
     }
 
     await run(

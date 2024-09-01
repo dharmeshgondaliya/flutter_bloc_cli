@@ -51,6 +51,7 @@ abstract class Constants {
   static final String radioButtonWidgetPath = "/lib/App/widgets/app_radio_button.dart";
   static final String networkImageWidgetPath = "/lib/App/widgets/app_network_image.dart";
   static final String searchFieldWidgetPath = "/lib/App/widgets/search_field.dart";
+  static final String emptyViewWidgetPath = "/lib/App/widgets/empty_view.dart";
 
   // Assets
   static final String assetsImageDirectoryPath = "/assets/images";

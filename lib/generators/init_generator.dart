@@ -62,7 +62,8 @@ class AppColors {
 
   static const assetImagesFileContent = """class AssetImages {
   static const String _assetpath = "assets/images";
-  // static const String logo = "\$_assetpath/logo.png";
+  static const String logo = "\$_assetpath/logo.png";
+  static const String empty = "\$_assetpath/empty.png";
 }""";
 
   static const baseScreenFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';

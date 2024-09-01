@@ -1,6 +1,6 @@
 name: flutter_bloc_cli
 description: CLI tool for rapidly scaffolding Flutter projects with BLoC architecture and code generation.
-version: 1.0.1
+version: 1.0.3
 repository: https://github.com/dharmeshgondaliya/flutter_bloc_cli
 
 platforms:
