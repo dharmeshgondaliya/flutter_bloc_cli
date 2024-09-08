@@ -24,6 +24,9 @@ abstract class Constants {
   static final String preferenceProviderPath = "/lib/App/data/provider/preference_provider.dart";
   static final String apiProviderPath = "/lib/App/data/provider/api_provider.dart";
 
+  // Enums
+  static final String enumsPath = "/lib/App/data/enums/enums.dart";
+
   // Screens
   static final String baseScreenPath = "/lib/App/screens/base_screen/view/base_screen.dart";
   static final String baseDialogPath = "/lib/App/screens/base_screen/view/base_dialog.dart";
@@ -41,6 +44,8 @@ abstract class Constants {
   static final String commonUtilsFilePath = "/lib/App/utils/common.dart";
   static final String assetImagesPath = "/lib/App/utils/asset_images.dart";
   static final String textStyleFilePath = "/lib/App/utils/app_text_style.dart";
+  static final String mediaUtilsFilePath = "/lib/App/utils/media_utils.dart";
+  static final String datePickerUtilsFilePath = "/lib/App/utils/date_picker_utils.dart";
 
   // Widgets
   static final String textFieldWidgetPath = "/lib/App/widgets/app_textfield.dart";
@@ -48,4 +53,22 @@ abstract class Constants {
   static final String radioButtonWidgetPath = "/lib/App/widgets/app_radio_button.dart";
   static final String networkImageWidgetPath = "/lib/App/widgets/app_network_image.dart";
   static final String searchFieldWidgetPath = "/lib/App/widgets/search_field.dart";
+  static final String emptyViewWidgetPath = "/lib/App/widgets/empty_view.dart";
+  static final String backArrowWidgetPath = "/lib/App/widgets/back_arrow.dart";
+  static final String authTextFieldWidgetPath = "/lib/App/widgets/auth_textfield.dart";
+  static final String authSubmitButtonWidgetPath = "/lib/App/widgets/auth_submit_button.dart";
+
+  // Assets
+  static final String assetsImageDirectoryPath = "/assets/images";
+  static final String assetsEmptyImageFilePath = "/assets/images/empty.png";
+
+  // Auth screens constants
+  static final String loginScreen = "login_screen";
+  static const String registerScreen = "register_screen";
+  static const String forgotPasswordScreen = "forgot_password_screen";
+  static const String resetPasswordScreen = "reset_password_screen";
+  static const String changePasswordScreen = "change_password_screen";
+  static const String otpVerificationScreen = "otp_verification_screen";
+  static const String profileSetupScreen = "profile_setup_screen";
+  static const String editProfileScreen = "edit_profile_screen";
 }

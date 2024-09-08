@@ -1,10 +1,13 @@
+import 'package:flutter_bloc_cli/commands/create_command/bloc_create_auth_screens_command.dart';
 import 'package:flutter_bloc_cli/commands/create_command/bloc_create_command.dart';
+import 'package:flutter_bloc_cli/commands/create_command/cubit_create_auth_screens_command.dart';
 import 'package:flutter_bloc_cli/commands/create_command/cubit_create_command.dart';
 import 'package:flutter_bloc_cli/commands/help_command/bloc_help_command.dart';
 import 'package:flutter_bloc_cli/commands/help_command/cubit_help_command.dart';
 import 'package:flutter_bloc_cli/commands/init_command/boc_init_command.dart';
 import 'package:flutter_bloc_cli/commands/init_command/cubit_init_command.dart';
 import 'package:flutter_bloc_cli/enums/enums.dart';
+import 'package:flutter_bloc_cli/validations/auth_screens_validations.dart';
 import 'package:flutter_bloc_cli/validations/create_validations.dart';
 import 'package:flutter_bloc_cli/validations/init_validations.dart';
 
@@ -45,6 +48,11 @@ class CliDataProvider {
               createMultiple: false,
             ),
           },
+          "auth-screens": {
+            "command": CubitAuthScreensCommand(
+              validations: AuthScreensValidations(),
+            ),
+          },
         },
       }
     },
@@ -76,7 +84,12 @@ class CliDataProvider {
               validations: CreateValidations(createMultiple: true),
               createMultiple: true,
             ),
-          }
+          },
+          "auth-screens": {
+            "command": BlocAuthScreensCommand(
+              validations: AuthScreensValidations(),
+            ),
+          },
         }
       }
     }

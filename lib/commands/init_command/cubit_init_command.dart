@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/generators/init_generator.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
+import 'package:process_run/shell_run.dart';
 
 class CubitInitCommand extends Command with Generator {
   CubitInitCommand({required super.validations});
@@ -17,6 +20,7 @@ class CubitInitCommand extends Command with Generator {
       createDirectory(path: Constants.utilsDirectoryPath.actualPath()),
       createDirectory(path: Constants.constantsDirectoryPath.actualPath()),
       createDirectory(path: Constants.providerDirectoryPath.actualPath()),
+      createDirectory(path: Constants.assetsImageDirectoryPath.actualPath()),
     ]);
     await Future.wait([
       writeFile(
@@ -80,6 +84,14 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.commonUtilsFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.mediaUtilsFilePath.actualPath(),
+        content: InitGenerator.mediaUtilsFileContent.replaceAppName,
+      ),
+      writeFile(
+        path: Constants.datePickerUtilsFilePath.actualPath(),
+        content: InitGenerator.datePickerUtilsFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.textFieldWidgetPath.actualPath(),
         content: InitGenerator.textfieldWidgetFileContent.replaceAppName,
       ),
@@ -100,6 +112,14 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.searchFieldWidgetFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.emptyViewWidgetPath.actualPath(),
+        content: InitGenerator.emptyWidgetFileContent.replaceAppName,
+      ),
+      writeFile(
+        path: Constants.backArrowWidgetPath.actualPath(),
+        content: InitGenerator.backArrowWidgetFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.textStyleFilePath.actualPath(),
         content: InitGenerator.textStyleFileContent.replaceAppName,
       ),
@@ -112,14 +132,35 @@ class CubitInitCommand extends Command with Generator {
         content: InitGenerator.preferenceProviderFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.enumsPath.actualPath(),
+        content: InitGenerator.enumsFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.apiProviderPath.actualPath(),
         content: InitGenerator.apiProviderFileContent.replaceAppName,
       ),
     ]);
-    // await run(
-    //   "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http",
-    //   verbose: false,
-    // );
+
+    String filePath = Platform.script.toFilePath();
+    if (filePath.contains("flutter_bloc_cli")) {
+      String directoryPath = filePath.substring(0, filePath.indexOf("${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}"));
+      String emptyImageFilePath = "$directoryPath${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}assets${Platform.pathSeparator}images${Platform.pathSeparator}empty.png";
+      String destinationFilePath = "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
+
+      print(emptyImageFilePath);
+
+      File emptyImageFile = File(emptyImageFilePath);
+      if (emptyImageFile.existsSync()) {
+        File destinationFile = File(destinationFilePath);
+        await destinationFile.create(recursive: true);
+        await emptyImageFile.copy(destinationFile.path);
+      }
+    }
+
+    await run(
+      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker",
+      verbose: false,
+    );
   }
 
   @override
