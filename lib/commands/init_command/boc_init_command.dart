@@ -88,6 +88,14 @@ class BlocInitCommand extends Command with Generator {
         content: InitGenerator.commonUtilsFileContent.replaceAppName,
       ),
       writeFile(
+        path: Constants.mediaUtilsFilePath.actualPath(),
+        content: InitGenerator.mediaUtilsFileContent.replaceAppName,
+      ),
+      writeFile(
+        path: Constants.datePickerUtilsFilePath.actualPath(),
+        content: InitGenerator.datePickerUtilsFileContent.replaceAppName,
+      ),
+      writeFile(
         path: Constants.textFieldWidgetPath.actualPath(),
         content: InitGenerator.textfieldWidgetFileContent.replaceAppName,
       ),
@@ -110,6 +118,10 @@ class BlocInitCommand extends Command with Generator {
       writeFile(
         path: Constants.emptyViewWidgetPath.actualPath(),
         content: InitGenerator.emptyWidgetFileContent.replaceAppName,
+      ),
+      writeFile(
+        path: Constants.backArrowWidgetPath.actualPath(),
+        content: InitGenerator.backArrowWidgetFileContent.replaceAppName,
       ),
       writeFile(
         path: Constants.textStyleFilePath.actualPath(),
@@ -148,7 +160,7 @@ class BlocInitCommand extends Command with Generator {
     }
 
     await run(
-      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer",
+      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker",
       verbose: false,
     );
   }

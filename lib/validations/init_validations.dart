@@ -10,8 +10,7 @@ class InitValidations extends Validations {
   Future<void> validate() async {
     await super.validate();
     String path = Directory.current.path;
-    bool appDirectoryExist =
-        await checkDirectoryExist("$path${Constants.appDirectoryPath}");
+    bool appDirectoryExist = await checkDirectoryExist("$path${Constants.appDirectoryPath}");
     if (appDirectoryExist) {
       throw CliException(
         message: "Initialization already completed",

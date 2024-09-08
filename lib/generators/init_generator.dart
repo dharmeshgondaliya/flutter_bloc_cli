@@ -67,6 +67,7 @@ class AppColors {
 }""";
 
   static const baseScreenFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+import 'package:<app_name>/App/utils/common.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -78,6 +79,7 @@ class BaseScreen extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.backgroundColor,
+    this.padding,
   });
   final PreferredSizeWidget? appBar;
   final Drawer? drawer;
@@ -85,12 +87,19 @@ class BaseScreen extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      body: body,
+      body: GestureDetector(
+        onTap: removeFocus,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 18),
+          child: body,
+        ),
+      ),
       backgroundColor: backgroundColor ?? AppColors.backgroundColor,
       drawer: drawer,
       floatingActionButton: floatingActionButton,
@@ -361,10 +370,103 @@ class EmptyView extends StatelessWidget {
   }
 }""";
 
+  static const String backArrowWidgetFileContent = """import 'package:flutter/material.dart';
+
+class BackArrow extends StatelessWidget {
+  const BackArrow({super.key, this.onTap});
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        onTap: onTap ?? () => Navigator.pop(context),
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Container(
+          width: 40,
+          height: 40,
+          margin: const EdgeInsets.only(left: 20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.arrow_back_outlined, color: Colors.black),
+        ),
+      ),
+    );
+  }
+}""";
+
   static const String commonUtilsFileContent = """import 'package:flutter/material.dart';
 
 void removeFocus() {
   FocusManager.instance.primaryFocus?.unfocus();
+}
+
+bool isValidEmail(String email) {
+  return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$')
+      .hasMatch(email);
+}
+
+bool isValidPassword(String password) {
+  return RegExp(r'^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\W_]{6,}\$')
+      .hasMatch(password);
+}""";
+
+  static const String mediaUtilsFileContent = """import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+
+class MediaUtil {
+  static Future<File?> selectImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    String? path = result?.files.firstOrNull?.path;
+    if (path == null) return null;
+    return File(path);
+  }
+
+  static Future<List<File>?> selectImages() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: true);
+    return result?.files.where((element) => element.path != null).map((e) => File(e.path!)).toList();
+  }
+
+  static Future<File?> selectVideo() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.video);
+    String? path = result?.files.firstOrNull?.path;
+    if (path == null) return null;
+    return File(path);
+  }
+}""";
+
+  static const String datePickerUtilsFileContent = """import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+extension DatePickerUtils on BuildContext {
+  Future<DateTime?> selectDate({DateTime? firstDate, DateTime? lastDate, DateTime? initialDate}) async {
+    return await showDatePicker(
+      context: this,
+      firstDate: firstDate ?? DateTime.now(),
+      lastDate: DateTime.now(),
+      initialDate: initialDate ?? DateTime(2000, 01, 01),
+    );
+  }
+}
+
+extension DateUtil on String {
+  String? get toTime {
+    DateTime? date = DateTime.tryParse(this);
+    if (date == null) return null;
+    return DateFormat('hh:mm a').format(date);
+  }
+
+  String? get toDate {
+    DateTime? date = DateTime.tryParse(this);
+    if (date == null) return null;
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
 }""";
 
   static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
@@ -469,8 +571,6 @@ class AppRadioButton<T> extends StatelessWidget {
 }""";
 
   static const String textfieldWidgetFileContent = """import 'package:flutter/material.dart';
-import 'package:<app_name>/App/data/constants/color_constants.dart';
-import 'package:<app_name>/App/utils/common.dart';
 import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
@@ -557,7 +657,7 @@ class AppTextField extends StatelessWidget {
       child: TextFormField(
         autofocus: autofocus,
         controller: controller,
-        cursorColor: AppColors.primaryColor,
+        cursorColor: Theme.of(context).colorScheme.primary,
         enabled: enabled,
         focusNode: focusNode,
         inputFormatters: inputFormatters,
@@ -571,9 +671,6 @@ class AppTextField extends StatelessWidget {
         onSaved: onSaved,
         onFieldSubmitted: onFieldSubmitted,
         onTap: onTap,
-        onTapOutside: (event) {
-          removeFocus();
-        },
         readOnly: readOnly,
         style: style,
         textAlignVertical: TextAlignVertical.center,
@@ -584,7 +681,7 @@ class AppTextField extends StatelessWidget {
           counterText: "",
           errorStyle: errorStyle,
           fillColor: fillColor,
-          filled: true,
+          filled: false,
           hintStyle: hintStyle,
           hintText: hintText,
           prefix: prefix,
