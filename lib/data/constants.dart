@@ -1,12 +1,13 @@
 abstract class Constants {
   // Directories
   static final String appDirectoryPath = "/lib/App";
-  static final String dataDirectoryPath = "/lib/App/data";
-  static final String constantsDirectoryPath = "/lib/App/data/constants";
-  static final String providerDirectoryPath = "/lib/App/data/provider";
+  static final String coreDirectoryPath = "/lib/App/core";
+  static final String constantsDirectoryPath = "/lib/App/core/constants";
+  static final String providerDirectoryPath = "/lib/App/core/provider";
   static final String screensDirectoryPath = "/lib/App/screens";
   static final String widgetsDirectoryPath = "/lib/App/widgets";
-  static final String utilsDirectoryPath = "/lib/App/utils";
+  static final String utilsDirectoryPath = "/lib/App/core/utils";
+  static final String themeDirectoryPath = "/lib/App/core/theme";
   static final String routesDirectoryPath = "/lib/App/routes";
 
   // Files
@@ -17,15 +18,25 @@ abstract class Constants {
   static final String routeNavigatorPath = "/lib/App/routes/route_navigator.dart";
 
   // Constants
-  static final String colorConstantsPath = "/lib/App/data/constants/color_constants.dart";
-  static final String urlManagerPath = "/lib/App/data/constants/url_manager.dart";
+  static final String colorConstantsPath = "/lib/App/core/constants/color_constants.dart";
+  static final String urlManagerPath = "/lib/App/core/constants/url_manager.dart";
 
   // Providers
-  static final String preferenceProviderPath = "/lib/App/data/provider/preference_provider.dart";
-  static final String apiProviderPath = "/lib/App/data/provider/api_provider.dart";
+  static final String preferenceProviderPath = "/lib/App/core/provider/preference_provider.dart";
+  static final String apiProviderPath = "/lib/App/core/provider/api_provider.dart";
+
+  // Theme
+  static final String themeFilePath = "/lib/App/core/theme/theme.dart";
 
   // Enums
-  static final String enumsPath = "/lib/App/data/enums/enums.dart";
+  static final String enumsPath = "/lib/App/core/enums/enums.dart";
+
+  // Utils
+  static final String commonUtilsFilePath = "/lib/App/core/utils/common.dart";
+  static final String assetImagesPath = "/lib/App/core/utils/asset_images.dart";
+  static final String textStyleFilePath = "/lib/App/core/utils/app_text_style.dart";
+  static final String mediaUtilsFilePath = "/lib/App/core/utils/media_utils.dart";
+  static final String datePickerUtilsFilePath = "/lib/App/core/utils/date_picker_utils.dart";
 
   // Screens
   static final String baseScreenPath = "/lib/App/screens/base_screen/view/base_screen.dart";
@@ -39,13 +50,6 @@ abstract class Constants {
   static final String homeScreenEventPath = "/lib/App/screens/home_screen/bloc/home_screen_event.dart";
   static final String homeScreenCubitPath = "/lib/App/screens/home_screen/cubit/home_screen_cubit.dart";
   static final String homeScreenStatePathCubit = "/lib/App/screens/home_screen/cubit/home_screen_state.dart";
-
-  // Utils
-  static final String commonUtilsFilePath = "/lib/App/utils/common.dart";
-  static final String assetImagesPath = "/lib/App/utils/asset_images.dart";
-  static final String textStyleFilePath = "/lib/App/utils/app_text_style.dart";
-  static final String mediaUtilsFilePath = "/lib/App/utils/media_utils.dart";
-  static final String datePickerUtilsFilePath = "/lib/App/utils/date_picker_utils.dart";
 
   // Widgets
   static final String textFieldWidgetPath = "/lib/App/widgets/app_textfield.dart";

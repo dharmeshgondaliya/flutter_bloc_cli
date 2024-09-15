@@ -120,7 +120,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/login_screen/bloc/login_screen_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../..//widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 
@@ -275,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   static const String loginScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'login_screen_event.dart';
 
@@ -324,7 +324,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/register_screen/bloc/register_screen_bloc.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -530,7 +530,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   static const String registerScreenRepositoryFileContent = """class RegisterScreenRepository {}""";
   static const String registerScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'register_screen_event.dart';
 
@@ -598,7 +598,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/forgot_password_screen/bloc/forgot_password_screen_bloc.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -691,7 +691,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   static const String forgotPasswordScreenRepositoryFileContent = """class ForgotPasswordScreenRepository {}""";
   static const String forgotPasswordScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'forgot_password_screen_event.dart';
 
@@ -727,7 +727,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/reset_password_screen/bloc/reset_password_screen_bloc.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -868,7 +868,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   static const String resetPasswordScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'reset_password_screen_event.dart';
 
@@ -929,7 +929,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/change_password_screen/bloc/change_password_screen_bloc.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -1096,7 +1096,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   static const String changePasswordScreenRepositoryFileContent = """class ChangePasswordScreenRepository {}""";
   static const String changePasswordScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'change_password_screen_event.dart';
 
@@ -1166,7 +1166,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/otp_verification_screen/bloc/otp_verification_screen_bloc.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -1260,7 +1260,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   static const String otpVerificationScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'otp_verification_screen_event.dart';
 
@@ -1301,9 +1301,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/profile_setup_screen/bloc/profile_setup_screen_bloc.dart';
 
-import '../../../utils/common.dart';
-import '../../../utils/media_utils.dart';
-import '../../../utils/date_picker_utils.dart';
+import '../../../core/utils/common.dart';
+import '../../../core/utils/media_utils.dart';
+import '../../../core/utils/date_picker_utils.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 
@@ -1526,7 +1526,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
 import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'profile_setup_screen_event.dart';
 
@@ -1595,9 +1595,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/edit_profile_screen/bloc/edit_profile_screen_bloc.dart';
 
-import '../../../utils/common.dart';
-import '../../../utils/date_picker_utils.dart';
-import '../../../utils/media_utils.dart';
+import '../../../core/utils/common.dart';
+import '../../../core/utils/date_picker_utils.dart';
+import '../../../core/utils/media_utils.dart';
 import '../../../widgets/app_textfield.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/back_arrow.dart';
@@ -1840,7 +1840,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'edit_profile_screen_event.dart';
 
@@ -1889,7 +1889,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/login_screen/cubit/login_screen_cubit.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../..//widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 
@@ -2038,7 +2038,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   static const String cubitLoginScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'login_screen_state.dart';
 
@@ -2076,7 +2076,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/register_screen/cubit/register_screen_cubit.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -2282,7 +2282,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   static const String cubitRegisterScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'register_screen_state.dart';
 
@@ -2329,7 +2329,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/forgot_password_screen/cubit/forgot_password_screen_cubit.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -2422,7 +2422,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   static const String cubitForgotPasswordScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'forgot_password_screen_state.dart';
 
@@ -2448,7 +2448,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/reset_password_screen/cubit/reset_password_screen_cubit.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -2587,7 +2587,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   static const String cubitResetPasswordScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'reset_password_screen_state.dart';
 
@@ -2633,7 +2633,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/change_password_screen/cubit/change_password_screen_cubit.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 import '../../../widgets/back_arrow.dart';
@@ -2800,7 +2800,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   static const String cubitChangePasswordScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'change_password_screen_state.dart';
 
@@ -2856,7 +2856,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/otp_verification_screen/cubit/otp_verification_screen_cubit.dart';
 
-import '../../../utils/common.dart';
+import '../../../core/utils/common.dart';
 import '../../../widgets/auth_submit_button.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -2948,7 +2948,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   static const String cubitOtpVerificationScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'otp_verification_screen_state.dart';
 
@@ -2978,9 +2978,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/profile_setup_screen/cubit/profile_setup_screen_cubit.dart';
 
-import '../../../utils/common.dart';
-import '../../../utils/media_utils.dart';
-import '../../../utils/date_picker_utils.dart';
+import '../../../core/utils/common.dart';
+import '../../../core/utils/media_utils.dart';
+import '../../../core/utils/date_picker_utils.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/auth_textfield.dart';
 
@@ -3201,7 +3201,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
 import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'profile_setup_screen_state.dart';
 
@@ -3253,9 +3253,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/edit_profile_screen/cubit/edit_profile_screen_cubit.dart';
 
-import '../../../utils/common.dart';
-import '../../../utils/date_picker_utils.dart';
-import '../../../utils/media_utils.dart';
+import '../../../core/utils/common.dart';
+import '../../../core/utils/date_picker_utils.dart';
+import '../../../core/utils/media_utils.dart';
 import '../../../widgets/app_textfield.dart';
 import '../../../widgets/auth_submit_button.dart';
 import '../../../widgets/back_arrow.dart';
@@ -3496,7 +3496,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 import 'package:bloc/bloc.dart';
 
-import '../../../data/enums/enums.dart';
+import '../../../core/enums/enums.dart';
 
 part 'edit_profile_screen_state.dart';
 

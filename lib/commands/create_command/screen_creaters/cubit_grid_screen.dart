@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
@@ -81,7 +82,7 @@ class CubitGridScreen extends CreateCommand with Generator {
           ),
         ]);
       }
-      print("\nSuccess! The $screenName screen has been created successfully.");
+      print(green("\nSuccess! The $screenName screen has been created successfully."));
     }
   }
 }

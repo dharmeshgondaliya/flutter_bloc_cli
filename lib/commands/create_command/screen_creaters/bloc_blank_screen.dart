@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/create_generartor.dart';
@@ -77,7 +78,7 @@ class BlocBlankScreen extends CreateCommand with Generator {
           ),
         ]);
       }
-      print("\nSuccess! The $screenName screen has been created successfully.");
+      print(green("\nSuccess! The $screenName screen has been created successfully."));
     }
   }
 }

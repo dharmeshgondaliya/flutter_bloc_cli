@@ -8,7 +8,8 @@ void main() {
 
   static const String appFileContent = """import 'package:flutter/material.dart';
 import 'package:<app_name>/App/routes/app_routes.dart';
-import 'package:<app_name>/App/routes/route_navigator.dart';      
+import 'package:<app_name>/App/routes/route_navigator.dart';
+import 'App/core/theme/theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -24,6 +25,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.initial,
       routes: RouteNavigator.routes,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }""";
@@ -66,8 +70,8 @@ class AppColors {
   static const String empty = "\$_assetpath/empty.png";
 }""";
 
-  static const baseScreenFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
-import 'package:<app_name>/App/utils/common.dart';
+  static const baseScreenFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
+import 'package:<app_name>/App/core/utils/common.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -168,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String homeScreenRepositoryFileContent = "class HomeScreenRepository {}";
   static const String homeScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';  
+import 'package:<app_name>/App/core/enums/enums.dart';  
 
 part 'home_screen_event.dart';
 
@@ -236,7 +240,7 @@ class BaseDialog extends StatelessWidget {
   }
 }""";
 
-  static const String customAppbarFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String customAppbarFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -342,7 +346,7 @@ class _SearchFieldState extends State<SearchField> {
 }""";
 
   static const String emptyWidgetFileContent = """import 'package:flutter/material.dart';
-import '../utils/asset_images.dart';
+import '../core/utils/asset_images.dart';
 
 class EmptyView extends StatelessWidget {
   const EmptyView({super.key, this.assetImage, this.titleText});
@@ -469,7 +473,7 @@ extension DateUtil on String {
   }
 }""";
 
-  static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppCheckbox extends StatelessWidget {
@@ -542,7 +546,7 @@ class AppNetworkImage extends StatelessWidget {
   }
 }""";
 
-  static const String radioButtonWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String radioButtonWidgetFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppRadioButton<T> extends StatelessWidget {
@@ -824,8 +828,8 @@ class PreferenceProvider {
   static const String apiProviderFileContent = """import 'dart:convert';
 import 'dart:io';
 
-import 'package:<app_name>/App/data/constants/url_manager.dart';
 import 'package:http/http.dart' as http;
+import '../constants/url_manager.dart';
 
 class ApiProvider {
   static final ApiProvider _apiProvider = ApiProvider._internal();
@@ -896,7 +900,23 @@ class ApiProvider {
   }
 }""";
 
-  static String homeScreenFileContentCubit = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static const String themeFileContent = """import 'package:flutter/material.dart';
+
+// Light Theme
+ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.light,
+  colorScheme: const ColorScheme.light(),
+);
+
+// Dark Theme
+ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: const ColorScheme.dark(),
+);""";
+
+  static const String homeScreenFileContentCubit = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -942,7 +962,7 @@ abstract class RouteNavigator {
 
   static const String homeScreenCubitFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part 'home_screen_state.dart';
 

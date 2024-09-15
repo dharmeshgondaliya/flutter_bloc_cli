@@ -1,7 +1,7 @@
 class CreateGenerator {
   static const String blocFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_event.dart';
 
@@ -31,7 +31,7 @@ class <state_name> {
 
   static const String blocListFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_event.dart';
 
@@ -79,7 +79,7 @@ class <state_name> {
 
   static const String blocGridFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_event.dart';
 
@@ -169,7 +169,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/widgets/search_field.dart';
 import 'package:bloc_cli_test/App/widgets/empty_view.dart';
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 import '../bloc/<screen_name>_bloc.dart';
 import 'grid_list_item_view.dart';
 import 'loading_view.dart';
@@ -190,6 +190,12 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
   void initState() {
     super.initState();
     init();
+  }
+
+  @override
+  void dispose() {
+    <close_bloc>
+    super.dispose();
   }
 
   void init() {
@@ -249,7 +255,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/widgets/search_field.dart';
 import 'package:<app_name>/App/widgets/empty_view.dart';
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 import '../bloc/<screen_name>_bloc.dart';
 import 'list_item_view.dart';
 import 'loading_view.dart';
@@ -327,7 +333,7 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
 
   static const String cubitFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_state.dart';
 
@@ -349,7 +355,7 @@ class <state_name> {
 
   static const String cubitListFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_state.dart';
 
@@ -386,7 +392,7 @@ class <state_name> {
 
   static const String cubitGridFileContent = """import 'package:bloc/bloc.dart';
 
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 
 part '<screen_name>_state.dart';
 
@@ -462,7 +468,7 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/cubit/<screen_name>_cubit.dart';
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 import 'package:<app_name>/App/widgets/search_field.dart';
 import 'package:bloc_cli_test/App/widgets/empty_view.dart';
 import 'grid_list_item_view.dart';
@@ -548,7 +554,7 @@ class _<screen_class_name>State extends State<<screen_class_name>> {
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/<screen_name>/cubit/<screen_name>_cubit.dart';
-import 'package:<app_name>/App/data/enums/enums.dart';
+import 'package:<app_name>/App/core/enums/enums.dart';
 import 'package:<app_name>/App/widgets/search_field.dart';
 import 'package:bloc_cli_test/App/widgets/empty_view.dart';
 import 'list_item_view.dart';

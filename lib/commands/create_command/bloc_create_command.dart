@@ -32,7 +32,7 @@ class BlocCreateCommand extends Command {
     }
 
     print('Choose the type of screen you want to create:');
-    print('1) Blank Screen');
+    print(yellow('1) Blank Screen'));
     print('2) Listing Screen');
     print('3) Grid Screen');
     String option = ask(
