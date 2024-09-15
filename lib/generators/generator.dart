@@ -68,10 +68,14 @@ mixin Generator<T> {
         .replaceAll("<screen_class_name>", screenName.screenClassName)
         .replaceAll("<screen_content>", screenName.screenContent)
         .replaceAll("<bloc_name>", screenName.blocName)
-        .replaceAll("<bloc_instance>", routeExist ? "" : "final ${screenName.blocName} bloc = ${screenName.blocName}();\n\n  @override\n  void dispose() {\n    bloc.close();\n    super.dispose();\n  }")
+        .replaceAll("<bloc_instance>", routeExist ? "" : "final ${screenName.blocName} bloc = ${screenName.blocName}();")
         .replaceAll("<bloc__instance>", routeExist ? "" : "bloc: bloc,")
-        .replaceAll("<cubit_instance>", routeExist ? "" : "final ${screenName.cubitName} cubit = ${screenName.cubitName}();\n\n  @override\n  void dispose() {\n    cubit.close();\n    super.dispose();\n  }")
+        .replaceAll("<cubit_instance>", routeExist ? "" : "final ${screenName.cubitName} cubit = ${screenName.cubitName}();")
         .replaceAll("<cubit__instance>", routeExist ? "" : "bloc: cubit,")
+        .replaceAll("<close_bloc>", routeExist ? "" : "bloc.close();")
+        .replaceAll("<close_cubit>", routeExist ? "" : "cubit.close();")
+        .replaceAll("<bloc_provider_instance>", routeExist ? "BlocProvider.of<${screenName.blocName}>(context)" : "bloc")
+        .replaceAll("<cubit_provider_instance>", routeExist ? "BlocProvider.of<${screenName.cubitName}>(context)" : "cubit")
         .replaceAppName;
   }
 

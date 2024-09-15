@@ -8,7 +8,8 @@ void main() {
 
   static const String appFileContent = """import 'package:flutter/material.dart';
 import 'package:<app_name>/App/routes/app_routes.dart';
-import 'package:<app_name>/App/routes/route_navigator.dart';      
+import 'package:<app_name>/App/routes/route_navigator.dart';
+import 'App/core/theme/theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -24,6 +25,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.initial,
       routes: RouteNavigator.routes,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }""";
@@ -62,10 +66,12 @@ class AppColors {
 
   static const assetImagesFileContent = """class AssetImages {
   static const String _assetpath = "assets/images";
-  // static const String logo = "\$_assetpath/logo.png";
+  static const String logo = "\$_assetpath/logo.png";
+  static const String empty = "\$_assetpath/empty.png";
 }""";
 
-  static const baseScreenFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const baseScreenFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
+import 'package:<app_name>/App/core/utils/common.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -77,6 +83,7 @@ class BaseScreen extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.backgroundColor,
+    this.padding,
   });
   final PreferredSizeWidget? appBar;
   final Drawer? drawer;
@@ -84,12 +91,19 @@ class BaseScreen extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      body: body,
+      body: GestureDetector(
+        onTap: removeFocus,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 18),
+          child: body,
+        ),
+      ),
       backgroundColor: backgroundColor ?? AppColors.backgroundColor,
       drawer: drawer,
       floatingActionButton: floatingActionButton,
@@ -158,6 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String homeScreenRepositoryFileContent = "class HomeScreenRepository {}";
   static const String homeScreenBlocFileContent = """import 'package:bloc/bloc.dart';
 
+import 'package:<app_name>/App/core/enums/enums.dart';  
+
 part 'home_screen_event.dart';
 
 part 'home_screen_state.dart';
@@ -171,6 +187,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   static const String homeScreenStateFileContent = """part of 'home_screen_bloc.dart';
 
 class HomeScreenState {
+  HomeScreenState({this.currentState = ActivityState.initial});
+
+  ActivityState currentState;
+
   HomeScreenState copy() {
     return HomeScreenState();
   }
@@ -220,7 +240,7 @@ class BaseDialog extends StatelessWidget {
   }
 }""";
 
-  static const String customAppbarFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String customAppbarFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -293,6 +313,7 @@ class _SearchFieldState extends State<SearchField> {
           constraints: BoxConstraints(minWidth: double.maxFinite, maxWidth: double.maxFinite, maxHeight: height, minHeight: height),
           contentPadding: const EdgeInsets.only(left: 10, right: 10),
           hintText: "Search...",
+          prefixIcon: const Icon(Icons.search_outlined),
           suffixIcon: showClearIcon
               ? InkWell(
                   onTap: () {
@@ -324,13 +345,135 @@ class _SearchFieldState extends State<SearchField> {
   }
 }""";
 
+  static const String emptyWidgetFileContent = """import 'package:flutter/material.dart';
+import '../core/utils/asset_images.dart';
+
+class EmptyView extends StatelessWidget {
+  const EmptyView({super.key, this.assetImage, this.titleText});
+
+  final String? assetImage;
+  final String? titleText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            assetImage ?? AssetImages.empty,
+            width: 150,
+            height: 150,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 20),
+          Text(titleText ?? "No Data Found")
+        ],
+      ),
+    );
+  }
+}""";
+
+  static const String backArrowWidgetFileContent = """import 'package:flutter/material.dart';
+
+class BackArrow extends StatelessWidget {
+  const BackArrow({super.key, this.onTap});
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        onTap: onTap ?? () => Navigator.pop(context),
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Container(
+          width: 40,
+          height: 40,
+          margin: const EdgeInsets.only(left: 20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.arrow_back_outlined, color: Colors.black),
+        ),
+      ),
+    );
+  }
+}""";
+
   static const String commonUtilsFileContent = """import 'package:flutter/material.dart';
 
 void removeFocus() {
   FocusManager.instance.primaryFocus?.unfocus();
+}
+
+bool isValidEmail(String email) {
+  return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$')
+      .hasMatch(email);
+}
+
+bool isValidPassword(String password) {
+  return RegExp(r'^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\W_]{6,}\$')
+      .hasMatch(password);
 }""";
 
-  static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String mediaUtilsFileContent = """import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+
+class MediaUtil {
+  static Future<File?> selectImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    String? path = result?.files.firstOrNull?.path;
+    if (path == null) return null;
+    return File(path);
+  }
+
+  static Future<List<File>?> selectImages() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: true);
+    return result?.files.where((element) => element.path != null).map((e) => File(e.path!)).toList();
+  }
+
+  static Future<File?> selectVideo() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.video);
+    String? path = result?.files.firstOrNull?.path;
+    if (path == null) return null;
+    return File(path);
+  }
+}""";
+
+  static const String datePickerUtilsFileContent = """import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+extension DatePickerUtils on BuildContext {
+  Future<DateTime?> selectDate({DateTime? firstDate, DateTime? lastDate, DateTime? initialDate}) async {
+    return await showDatePicker(
+      context: this,
+      firstDate: firstDate ?? DateTime.now(),
+      lastDate: DateTime.now(),
+      initialDate: initialDate ?? DateTime(2000, 01, 01),
+    );
+  }
+}
+
+extension DateUtil on String {
+  String? get toTime {
+    DateTime? date = DateTime.tryParse(this);
+    if (date == null) return null;
+    return DateFormat('hh:mm a').format(date);
+  }
+
+  String? get toDate {
+    DateTime? date = DateTime.tryParse(this);
+    if (date == null) return null;
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+}""";
+
+  static const String checkboxWidgetFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppCheckbox extends StatelessWidget {
@@ -403,7 +546,7 @@ class AppNetworkImage extends StatelessWidget {
   }
 }""";
 
-  static const String radioButtonWidgetFileContent = """import 'package:<app_name>/App/data/constants/color_constants.dart';
+  static const String radioButtonWidgetFileContent = """import 'package:<app_name>/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppRadioButton<T> extends StatelessWidget {
@@ -432,8 +575,6 @@ class AppRadioButton<T> extends StatelessWidget {
 }""";
 
   static const String textfieldWidgetFileContent = """import 'package:flutter/material.dart';
-import 'package:<app_name>/App/data/constants/color_constants.dart';
-import 'package:<app_name>/App/utils/common.dart';
 import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
@@ -520,7 +661,7 @@ class AppTextField extends StatelessWidget {
       child: TextFormField(
         autofocus: autofocus,
         controller: controller,
-        cursorColor: AppColors.primaryColor,
+        cursorColor: Theme.of(context).colorScheme.primary,
         enabled: enabled,
         focusNode: focusNode,
         inputFormatters: inputFormatters,
@@ -534,9 +675,6 @@ class AppTextField extends StatelessWidget {
         onSaved: onSaved,
         onFieldSubmitted: onFieldSubmitted,
         onTap: onTap,
-        onTapOutside: (event) {
-          removeFocus();
-        },
         readOnly: readOnly,
         style: style,
         textAlignVertical: TextAlignVertical.center,
@@ -547,7 +685,7 @@ class AppTextField extends StatelessWidget {
           counterText: "",
           errorStyle: errorStyle,
           fillColor: fillColor,
-          filled: true,
+          filled: false,
           hintStyle: hintStyle,
           hintText: hintText,
           prefix: prefix,
@@ -640,6 +778,8 @@ class AppTextStyle {
   String get token => _token;
 }""";
 
+  static const String enumsFileContent = """enum ActivityState { initial, loading, loaded, empty, error }""";
+
   static const String preferenceProviderFileContent = """import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceProvider {
@@ -688,8 +828,8 @@ class PreferenceProvider {
   static const String apiProviderFileContent = """import 'dart:convert';
 import 'dart:io';
 
-import 'package:<app_name>/App/data/constants/url_manager.dart';
 import 'package:http/http.dart' as http;
+import '../constants/url_manager.dart';
 
 class ApiProvider {
   static final ApiProvider _apiProvider = ApiProvider._internal();
@@ -760,7 +900,23 @@ class ApiProvider {
   }
 }""";
 
-  static String homeScreenFileContentCubit = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
+  static const String themeFileContent = """import 'package:flutter/material.dart';
+
+// Light Theme
+ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.light,
+  colorScheme: const ColorScheme.light(),
+);
+
+// Dark Theme
+ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: const ColorScheme.dark(),
+);""";
+
+  static const String homeScreenFileContentCubit = """import 'package:<app_name>/App/screens/base_screen/view/base_screen.dart';
 import 'package:<app_name>/App/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -805,6 +961,9 @@ abstract class RouteNavigator {
 }""";
 
   static const String homeScreenCubitFileContent = """import 'package:bloc/bloc.dart';
+
+import 'package:<app_name>/App/core/enums/enums.dart';
+
 part 'home_screen_state.dart';
 
 class HomeScreenCubit extends Cubit<HomeScreenState> {
@@ -814,8 +973,12 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   static const String homeScreenStateFileContentCubit = """part of 'home_screen_cubit.dart';
 
 class HomeScreenState {
+  HomeScreenState({this.currentState = ActivityState.initial});
+
+  ActivityState currentState;
+
   HomeScreenState copy() {
-    return HomeScreenState();
+    return HomeScreenState(currentState: currentState);
   }
 }""";
 }

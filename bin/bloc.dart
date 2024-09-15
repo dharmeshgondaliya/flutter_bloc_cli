@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/enums/enums.dart';
@@ -20,13 +21,12 @@ void main(List<String> arguments) async {
     }
     await command.execute();
   } on CliException catch (e) {
-    print(e.message);
+    print(red(e.message));
   } on PathNotFoundException catch (e) {
-    print("File does not exist: ${e.path}");
+    print(red("File does not exist: ${e.path}"));
   } catch (e) {
-    print(e.toString());
+    print(red(e.toString()));
   }
   stopwatch.stop();
-  print(
-      "Total execution time: ${stopwatch.elapsedMilliseconds} Milliseconds\n");
+  print(yellow("Total execution time: ${stopwatch.elapsedMilliseconds} Milliseconds\n"));
 }
