@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/create_auth_screens_generator.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
-import 'package:process_run/shell_run.dart';
+import 'package:process_run/shell_run.dart' as process;
 
 import '../command.dart';
 
@@ -238,12 +239,9 @@ class BlocAuthScreensCommand extends Command with Generator {
       }
     }
 
-    await run(
-      "flutter pub add flutter_otp_text_field",
-      verbose: false,
-    );
+    await process.run("flutter pub add flutter_otp_text_field", verbose: false);
 
-    print("\nSuccess! The Authentication screens has been created successfully.");
+    print(green("\nSuccess! The Authentication screens has been created successfully."));
   }
 
   @override

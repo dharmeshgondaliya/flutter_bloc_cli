@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/commands/command.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
 import 'package:flutter_bloc_cli/generators/generator.dart';
 import 'package:flutter_bloc_cli/generators/init_generator.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 import 'package:flutter_bloc_cli/utils/string_extensions.dart';
-import 'package:process_run/shell_run.dart';
+import 'package:process_run/shell_run.dart' as process;
 
 class BlocInitCommand extends Command with Generator {
   BlocInitCommand({required super.validations});
@@ -14,12 +15,13 @@ class BlocInitCommand extends Command with Generator {
   @override
   Future<void> execute() async {
     await Future.wait([
-      createDirectory(path: Constants.dataDirectoryPath.actualPath()),
+      createDirectory(path: Constants.coreDirectoryPath.actualPath()),
       createDirectory(path: Constants.screensDirectoryPath.actualPath()),
       createDirectory(path: Constants.widgetsDirectoryPath.actualPath()),
       createDirectory(path: Constants.utilsDirectoryPath.actualPath()),
       createDirectory(path: Constants.constantsDirectoryPath.actualPath()),
       createDirectory(path: Constants.providerDirectoryPath.actualPath()),
+      createDirectory(path: Constants.themeDirectoryPath.actualPath()),
       createDirectory(path: Constants.assetsImageDirectoryPath.actualPath()),
     ]);
     await Future.wait([
@@ -143,6 +145,10 @@ class BlocInitCommand extends Command with Generator {
         path: Constants.apiProviderPath.actualPath(),
         content: InitGenerator.apiProviderFileContent.replaceAppName,
       ),
+      writeFile(
+        path: Constants.themeFilePath.actualPath(),
+        content: InitGenerator.themeFileContent.replaceAppName,
+      ),
     ]);
 
     String filePath = Platform.script.toFilePath();
@@ -159,10 +165,9 @@ class BlocInitCommand extends Command with Generator {
       }
     }
 
-    await run(
-      "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker",
-      verbose: false,
-    );
+    await process.run("flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker", verbose: false);
+
+    print(green("Bloc Pattern structure successfully generated."));
   }
 
   @override
