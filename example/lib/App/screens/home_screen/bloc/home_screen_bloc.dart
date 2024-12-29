@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 
+import 'package:example/App/core/enums/enums.dart';  
+
 part 'home_screen_event.dart';
 
 part 'home_screen_state.dart';

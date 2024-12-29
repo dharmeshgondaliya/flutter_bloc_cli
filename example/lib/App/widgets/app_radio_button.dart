@@ -1,4 +1,4 @@
-import 'package:example/App/data/constants/color_constants.dart';
+import 'package:example/App/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppRadioButton<T> extends StatelessWidget {

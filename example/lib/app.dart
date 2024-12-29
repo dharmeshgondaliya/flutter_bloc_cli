@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:example/App/routes/app_routes.dart';
-import 'package:example/App/routes/route_navigator.dart';      
+import 'package:example/App/routes/route_navigator.dart';
+import 'App/core/theme/theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -16,6 +17,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.initial,
       routes: RouteNavigator.routes,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }

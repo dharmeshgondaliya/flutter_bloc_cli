@@ -14,7 +14,8 @@ import 'screen_creaters/cubit_grid_screen.dart';
 import 'screen_creaters/cubit_listing_screen.dart';
 
 class CubitCreateCommand extends Command {
-  CubitCreateCommand({required super.validations, required this.createMultiple});
+  CubitCreateCommand(
+      {required super.validations, required this.createMultiple});
   final bool createMultiple;
 
   @override
@@ -27,9 +28,13 @@ class CubitCreateCommand extends Command {
 
   Future<void> createPage() async {
     for (String screen in CliDataProvider.instance.args.sublist(2)) {
-      bool screenExist = await checkDirectoryExist("${Directory.current.path}${Constants.screensDirectoryPath}\\$screen".actualPath());
+      bool screenExist = await checkDirectoryExist(
+          "${Directory.current.path}${Constants.screensDirectoryPath}\\$screen"
+              .actualPath());
       if (screenExist) {
-        throw CliException(message: "${"${Constants.screensDirectoryPath}\\$screen".actualPath()} already exist");
+        throw CliException(
+            message:
+                "${"${Constants.screensDirectoryPath}\\$screen".actualPath()} already exist");
       }
     }
 
@@ -55,6 +60,7 @@ class CubitCreateCommand extends Command {
         createScreen = CubitBlankScreen();
     }
     await createScreen.execute();
+    print(green(createScreen.successMessage));
   }
 
   @override

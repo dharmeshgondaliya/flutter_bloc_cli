@@ -1,4 +1,5 @@
-import 'package:example/App/data/constants/color_constants.dart';
+import 'package:example/App/core/constants/color_constants.dart';
+import 'package:example/App/core/utils/common.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class BaseScreen extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.backgroundColor,
+    this.padding,
   });
   final PreferredSizeWidget? appBar;
   final Drawer? drawer;
@@ -17,12 +19,19 @@ class BaseScreen extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      body: body,
+      body: GestureDetector(
+        onTap: removeFocus,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 18),
+          child: body,
+        ),
+      ),
       backgroundColor: backgroundColor ?? AppColors.backgroundColor,
       drawer: drawer,
       floatingActionButton: floatingActionButton,

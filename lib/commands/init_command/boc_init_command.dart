@@ -153,9 +153,14 @@ class BlocInitCommand extends Command with Generator {
 
     String filePath = Platform.script.toFilePath();
     if (filePath.contains("flutter_bloc_cli")) {
-      String directoryPath = filePath.substring(0, filePath.indexOf("${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}"));
-      String emptyImageFilePath = "$directoryPath${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}assets${Platform.pathSeparator}images${Platform.pathSeparator}empty.png";
-      String destinationFilePath = "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
+      String directoryPath = filePath.substring(
+          0,
+          filePath.indexOf(
+              "${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}"));
+      String emptyImageFilePath =
+          "$directoryPath${Platform.pathSeparator}flutter_bloc_cli${Platform.pathSeparator}assets${Platform.pathSeparator}images${Platform.pathSeparator}empty.png";
+      String destinationFilePath =
+          "${Directory.current.path}${Constants.assetsEmptyImageFilePath.actualPath()}";
 
       File emptyImageFile = File(emptyImageFilePath);
       if (emptyImageFile.existsSync()) {
@@ -165,9 +170,78 @@ class BlocInitCommand extends Command with Generator {
       }
     }
 
-    await process.run("flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker", verbose: false);
+    print(green("""Generated files:\n
+\\lib
+  - App
+    - core
+      - constants
+        - color_constants.dart
+        - url_manager.dart
 
-    print(green("Bloc Pattern structure successfully generated."));
+      - enums
+        - enums.dart
+      
+      - provider
+        - api_provider.dart
+        - preference_provider.dart
+      
+      - theme
+        - theme.dart
+      
+      - utils
+        - app_text_style.dart
+        - asset_images.dart
+        - common.dart
+        - date_picker_utils.dart
+        - media_utils.dart
+    
+    - routes
+      - app_routes.dart
+      - route_navigator.dart
+    
+    - screens
+      - base_screen
+        - view
+          - base_dialog.dart
+          - base_screen.dart
+          - custom_appbar.dart
+      
+      - home_screen
+        - bloc
+          - home_screen_bloc.dart
+          - home_screen_event.dart
+          - home_screen_state.dart
+        
+        - repository
+          - home_screen_repository.dart
+        
+        - view
+          - home_screen.dart    
+      
+      - splash_screen
+        - view
+          - splash_screen.dart    
+    
+    - widgets
+     - app_checkbox.dart
+     - app_network_image.dart
+     - app_radio_button.dart
+     - app_textfield.dart
+     - back_arrow.dart
+     - empty_view.dart
+     - search_field.dart
+  
+  - app.dart
+  - main.dart
+\n\n"""));
+
+    print(green("Adding the required dependencies to your project..."));
+
+    await process.run(
+        "flutter pub add bloc flutter_bloc cached_network_image shared_preferences http shimmer intl file_picker",
+        verbose: false);
+
+    print(green("√ Bloc Pattern structure successfully generated."));
   }
 
   @override
