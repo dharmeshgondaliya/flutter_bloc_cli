@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:example/App/data/constants/url_manager.dart';
 import 'package:http/http.dart' as http;
+import '../constants/url_manager.dart';
 
 class ApiProvider {
   static final ApiProvider _apiProvider = ApiProvider._internal();

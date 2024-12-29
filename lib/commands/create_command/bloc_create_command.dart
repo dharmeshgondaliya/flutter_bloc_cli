@@ -25,9 +25,13 @@ class BlocCreateCommand extends Command {
 
   Future<void> createPage() async {
     for (String screen in CliDataProvider.instance.args.sublist(2)) {
-      bool screenExist = await checkDirectoryExist("${Directory.current.path}${Constants.screensDirectoryPath}\\$screen".actualPath());
+      bool screenExist = await checkDirectoryExist(
+          "${Directory.current.path}${Constants.screensDirectoryPath}\\$screen"
+              .actualPath());
       if (screenExist) {
-        throw CliException(message: "${"${Constants.screensDirectoryPath}\\$screen".actualPath()} already exist");
+        throw CliException(
+            message:
+                "${"${Constants.screensDirectoryPath}\\$screen".actualPath()} already exist");
       }
     }
 
@@ -53,6 +57,7 @@ class BlocCreateCommand extends Command {
         createScreen = BlocBlankScreen();
     }
     await createScreen.execute();
+    print(green(createScreen.successMessage));
   }
 
   @override

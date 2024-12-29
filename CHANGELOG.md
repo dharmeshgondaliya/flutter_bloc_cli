@@ -19,3 +19,8 @@
 - Moved the utils directory into the core directory and updated the data directory to core.
 - Error messages are now highlighted in red for better visibility.
 - Success messages are now highlighted in green for better visibility.
+
+### 1.0.5 - Message and Dependency Updates
+
+- Updated success and failure messages for better clarity and consistency.
+- Upgraded package dependencies to their latest versions for improved stability and performance.

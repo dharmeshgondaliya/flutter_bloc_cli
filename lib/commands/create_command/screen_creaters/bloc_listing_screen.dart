@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
@@ -10,37 +9,52 @@ import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 
 class BlocListingScreen extends CreateCommand with Generator {
+  String _successMessage = """\nGenerated files:\n
+\\lib
+  - App
+    - screens""";
+
   @override
   Future<void> execute() async {
-    bool routeExist = await checkDirectoryExist("${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
+    bool routeExist = await checkDirectoryExist(
+        "${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
 
     for (String screenName in CliDataProvider.instance.args.sublist(2)) {
-      await createDirectory(path: "${Constants.screensDirectoryPath}\\$screenName".actualPath());
+      await createDirectory(
+          path: "${Constants.screensDirectoryPath}\\$screenName".actualPath());
 
       await Future.wait([
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_bloc.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_bloc.dart"
+                  .actualPath(),
           content: getBlocFileContent(
             screenName,
             CreateGenerator.blocListFileContent,
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_event.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_event.dart"
+                  .actualPath(),
           content: getBlocEventFileContent(
             screenName,
             CreateGenerator.blocEventListFileContent,
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_state.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\bloc\\${screenName}_state.dart"
+                  .actualPath(),
           content: getBlocStateFileContent(
             screenName,
             CreateGenerator.blocStateListFileContent,
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart"
+                  .actualPath(),
           content: getScreenFileContent(
             screenName,
             CreateGenerator.blocListingScreenFileContent,
@@ -48,15 +62,21 @@ class BlocListingScreen extends CreateCommand with Generator {
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart"
+                  .actualPath(),
           content: CreateGenerator.listItemViewFileContent,
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart"
+                  .actualPath(),
           content: CreateGenerator.listLoadingViewFileContent,
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart"
+                  .actualPath(),
           content: getRepositoryFileContent(
             screenName,
             CreateGenerator.repositoryFileContent,
@@ -65,7 +85,10 @@ class BlocListingScreen extends CreateCommand with Generator {
       ]);
 
       if (routeExist) {
-        List routingData = await Future.wait([readFile(path: Constants.appRoutesPath.actualPath()), readFile(path: Constants.routeNavigatorPath.actualPath())]);
+        List routingData = await Future.wait([
+          readFile(path: Constants.appRoutesPath.actualPath()),
+          readFile(path: Constants.routeNavigatorPath.actualPath())
+        ]);
         String routesFileData = routingData[0];
         String routeNavigatorData = routingData[1];
 
@@ -86,7 +109,27 @@ class BlocListingScreen extends CreateCommand with Generator {
           ),
         ]);
       }
-      print(green("\nSuccess! The $screenName screen has been created successfully."));
+
+      _successMessage += """\n      - $screenName
+        - bloc
+          - ${screenName}_bloc.dart
+          - ${screenName}_event.dart
+          - ${screenName}_state.dart
+        
+        - repository
+          - ${screenName}_repository.dart
+        
+        - view
+          - $screenName.dart
+          - list_item_view.dart
+          - loading_view.dart\n""";
+
+      // print(green("\nSuccess! The $screenName screen has been created successfully."));
     }
+
+    _successMessage += "\n";
   }
+
+  @override
+  String get successMessage => _successMessage;
 }

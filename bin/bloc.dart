@@ -21,12 +21,13 @@ void main(List<String> arguments) async {
     }
     await command.execute();
   } on CliException catch (e) {
-    print(red(e.message));
+    print(red("⚠  ${e.message}"));
   } on PathNotFoundException catch (e) {
-    print(red("File does not exist: ${e.path}"));
+    print(red("⚠  File does not exist: ${e.path}"));
   } catch (e) {
-    print(red(e.toString()));
+    print(red("⚠  ${e.toString()}"));
   }
   stopwatch.stop();
-  print(yellow("Total execution time: ${stopwatch.elapsedMilliseconds} Milliseconds\n"));
+  print(yellow(
+      "⌛ Total execution time: ${stopwatch.elapsedMilliseconds} Milliseconds\n"));
 }

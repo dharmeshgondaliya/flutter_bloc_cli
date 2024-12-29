@@ -49,18 +49,27 @@ mixin Generator<T> {
   }
 
   String getBlocEventFileContent(String screenName, String content) {
-    return content.replaceAll("<screen_name>", screenName).replaceAll("<event_name>", screenName.eventName).replaceAppName;
+    return content
+        .replaceAll("<screen_name>", screenName)
+        .replaceAll("<event_name>", screenName.eventName)
+        .replaceAppName;
   }
 
   String getBlocStateFileContent(String screenName, String content) {
-    return content.replaceAll("<screen_name>", screenName).replaceAll("<state_name>", screenName.stateName).replaceAppName;
+    return content
+        .replaceAll("<screen_name>", screenName)
+        .replaceAll("<state_name>", screenName.stateName)
+        .replaceAppName;
   }
 
   String getRepositoryFileContent(String screenName, String content) {
-    return content.replaceAll("<repository_name>", screenName.repositoryName).replaceAppName;
+    return content
+        .replaceAll("<repository_name>", screenName.repositoryName)
+        .replaceAppName;
   }
 
-  String getScreenFileContent(String screenName, String content, bool routeExist) {
+  String getScreenFileContent(
+      String screenName, String content, bool routeExist) {
     return content
         .replaceAll("<screen_name>", screenName)
         .replaceAll("<cubit_name>", screenName.cubitName)
@@ -68,36 +77,59 @@ mixin Generator<T> {
         .replaceAll("<screen_class_name>", screenName.screenClassName)
         .replaceAll("<screen_content>", screenName.screenContent)
         .replaceAll("<bloc_name>", screenName.blocName)
-        .replaceAll("<bloc_instance>", routeExist ? "" : "final ${screenName.blocName} bloc = ${screenName.blocName}();")
+        .replaceAll(
+            "<bloc_instance>",
+            routeExist
+                ? ""
+                : "final ${screenName.blocName} bloc = ${screenName.blocName}();")
         .replaceAll("<bloc__instance>", routeExist ? "" : "bloc: bloc,")
-        .replaceAll("<cubit_instance>", routeExist ? "" : "final ${screenName.cubitName} cubit = ${screenName.cubitName}();")
+        .replaceAll(
+            "<cubit_instance>",
+            routeExist
+                ? ""
+                : "final ${screenName.cubitName} cubit = ${screenName.cubitName}();")
         .replaceAll("<cubit__instance>", routeExist ? "" : "bloc: cubit,")
         .replaceAll("<close_bloc>", routeExist ? "" : "bloc.close();")
         .replaceAll("<close_cubit>", routeExist ? "" : "cubit.close();")
-        .replaceAll("<bloc_provider_instance>", routeExist ? "BlocProvider.of<${screenName.blocName}>(context)" : "bloc")
-        .replaceAll("<cubit_provider_instance>", routeExist ? "BlocProvider.of<${screenName.cubitName}>(context)" : "cubit")
+        .replaceAll(
+            "<bloc_provider_instance>",
+            routeExist
+                ? "BlocProvider.of<${screenName.blocName}>(context)"
+                : "bloc")
+        .replaceAll(
+            "<cubit_provider_instance>",
+            routeExist
+                ? "BlocProvider.of<${screenName.cubitName}>(context)"
+                : "cubit")
         .replaceAppName;
   }
 
   String getRoutesFileContent(String screenName, String routesFileContent) {
     String routeName = "";
     if (routesFileContent.contains("abstract class Routes")) {
-      String routesData = routesFileContent.replaceAll("abstract class Routes {", "").replaceAll("}", "").trim();
+      String routesData = routesFileContent
+          .replaceAll("abstract class Routes {", "")
+          .replaceAll("}", "")
+          .trim();
       routeName = screenName.routeName;
-      routesData = "$routesData\nstatic const String $routeName = \"/$routeName\";";
+      routesData =
+          "$routesData\nstatic const String $routeName = \"/$routeName\";";
 
       String finalRoutes = "abstract class Routes {$routesData}";
 
-      return DartFormatter().format(finalRoutes);
+      return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+          .format(finalRoutes);
     }
     return routesFileContent;
   }
 
-  String getNavigatorFileContent(String screenName, String navigatorFileContent) {
+  String getNavigatorFileContent(
+      String screenName, String navigatorFileContent) {
     String routeName = screenName.routeName;
     if (navigatorFileContent.contains("abstract class RouteNavigator")) {
       List lines = navigatorFileContent.replaceAll("\n\n", "\n").split("\n");
-      int index = lines.indexWhere((element) => element.contains("abstract class RouteNavigator"));
+      int index = lines.indexWhere(
+          (element) => element.contains("abstract class RouteNavigator"));
       if (index != -1) {
         String imports =
             "import 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/view/$screenName.dart';\nimport 'package:${PubspecUtils.instance.getAppName}/App/screens/$screenName/${CliDataProvider.instance.codePattern.value}/${screenName}_${CliDataProvider.instance.codePattern.value}.dart';";
@@ -111,7 +143,8 @@ mixin Generator<T> {
       if (match == null) return navigatorFileContent;
       String? matchData = match.group(0);
       if (matchData == null) return navigatorFileContent;
-      String mapStringData = matchData.replaceAll("routes = {", "").replaceAll("};", "").trim();
+      String mapStringData =
+          matchData.replaceAll("routes = {", "").replaceAll("};", "").trim();
       if (!mapStringData.endsWith(",")) {
         mapStringData = "$mapStringData,";
       }
@@ -119,7 +152,8 @@ mixin Generator<T> {
       String routes =
           "routes = {${mapStringData}Routes.$routeName: (BuildContext context) => BlocProvider(create: (context) => ${CliDataProvider.instance.codePattern == CodePattern.bloc ? screenName.blocName : screenName.cubitName}(),child: const ${screenName.camelCase}(),)};";
       navigatorFileContent = navigatorFileContent.replaceAll(matchData, routes);
-      return DartFormatter().format(navigatorFileContent);
+      return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+          .format(navigatorFileContent);
     }
     return navigatorFileContent;
   }

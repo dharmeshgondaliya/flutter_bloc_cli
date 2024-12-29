@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dcli/dcli.dart';
 import 'package:flutter_bloc_cli/commands/create_command/create_command.dart';
 import 'package:flutter_bloc_cli/data/cli_data_provider.dart';
 import 'package:flutter_bloc_cli/data/constants.dart';
@@ -10,30 +9,42 @@ import 'package:flutter_bloc_cli/utils/common.dart';
 import 'package:flutter_bloc_cli/utils/file_path_utils.dart';
 
 class CubitListingScreen extends CreateCommand with Generator {
+  String _successMessage = """\nGenerated files:\n
+\\lib
+  - App
+    - screens""";
   @override
   Future<void> execute() async {
-    bool routeExist = await checkDirectoryExist("${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
+    bool routeExist = await checkDirectoryExist(
+        "${Directory.current.path}${Constants.routesDirectoryPath.actualPath()}");
 
     for (String screenName in CliDataProvider.instance.args.sublist(2)) {
-      await createDirectory(path: "${Constants.screensDirectoryPath}\\$screenName".actualPath());
+      await createDirectory(
+          path: "${Constants.screensDirectoryPath}\\$screenName".actualPath());
 
       await Future.wait([
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_cubit.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_cubit.dart"
+                  .actualPath(),
           content: getBlocFileContent(
             screenName,
             CreateGenerator.cubitListFileContent,
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_state.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\cubit\\${screenName}_state.dart"
+                  .actualPath(),
           content: getBlocStateFileContent(
             screenName,
             CreateGenerator.cubitStateListFileContent,
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\$screenName.dart"
+                  .actualPath(),
           content: getScreenFileContent(
             screenName,
             CreateGenerator.cubitListingScreenFileContent,
@@ -41,15 +52,21 @@ class CubitListingScreen extends CreateCommand with Generator {
           ),
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\list_item_view.dart"
+                  .actualPath(),
           content: CreateGenerator.listItemViewFileContent,
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\view\\loading_view.dart"
+                  .actualPath(),
           content: CreateGenerator.listLoadingViewFileContent,
         ),
         writeFile(
-          path: "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart".actualPath(),
+          path:
+              "${Constants.screensDirectoryPath}\\$screenName\\repository\\${screenName}_repository.dart"
+                  .actualPath(),
           content: getRepositoryFileContent(
             screenName,
             CreateGenerator.repositoryFileContent,
@@ -82,7 +99,25 @@ class CubitListingScreen extends CreateCommand with Generator {
           ),
         ]);
       }
-      print(green("\nSuccess! The $screenName screen has been created successfully."));
+
+      _successMessage += """\n      - $screenName
+        - cubit
+          - ${screenName}_cubit.dart
+          - ${screenName}_state.dart
+        
+        - repository
+          - ${screenName}_repository.dart
+        
+        - view
+          - $screenName.dart
+          - list_item_view.dart
+          - loading_view.dart\n""";
+
+      // print(green("\nSuccess! The $screenName screen has been created successfully."));
     }
+    _successMessage += "\n";
   }
+
+  @override
+  String get successMessage => _successMessage;
 }

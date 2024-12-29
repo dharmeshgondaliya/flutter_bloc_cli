@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:example/App/data/constants/color_constants.dart';
-import 'package:example/App/utils/common.dart';
 import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
@@ -87,7 +85,7 @@ class AppTextField extends StatelessWidget {
       child: TextFormField(
         autofocus: autofocus,
         controller: controller,
-        cursorColor: AppColors.primaryColor,
+        cursorColor: Theme.of(context).colorScheme.primary,
         enabled: enabled,
         focusNode: focusNode,
         inputFormatters: inputFormatters,
@@ -101,9 +99,6 @@ class AppTextField extends StatelessWidget {
         onSaved: onSaved,
         onFieldSubmitted: onFieldSubmitted,
         onTap: onTap,
-        onTapOutside: (event) {
-          removeFocus();
-        },
         readOnly: readOnly,
         style: style,
         textAlignVertical: TextAlignVertical.center,
@@ -114,7 +109,7 @@ class AppTextField extends StatelessWidget {
           counterText: "",
           errorStyle: errorStyle,
           fillColor: fillColor,
-          filled: true,
+          filled: false,
           hintStyle: hintStyle,
           hintText: hintText,
           prefix: prefix,

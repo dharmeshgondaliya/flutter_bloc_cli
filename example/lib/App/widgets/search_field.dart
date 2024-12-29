@@ -48,6 +48,7 @@ class _SearchFieldState extends State<SearchField> {
           constraints: BoxConstraints(minWidth: double.maxFinite, maxWidth: double.maxFinite, maxHeight: height, minHeight: height),
           contentPadding: const EdgeInsets.only(left: 10, right: 10),
           hintText: "Search...",
+          prefixIcon: const Icon(Icons.search_outlined),
           suffixIcon: showClearIcon
               ? InkWell(
                   onTap: () {
